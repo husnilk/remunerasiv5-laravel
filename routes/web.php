@@ -14,8 +14,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
 
-    Route::resource('admin/roles', RoleController::class)->except(['show']);
-    Route::get('admin/permissions', [PermissionController::class, 'index'])->name('admin.permissions.index');
+    Route::name('admin.')->prefix('admin')->group(function () {
+        Route::resource('roles', RoleController::class)->except(['show']);
+        Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
+    });
 });
 
 require __DIR__.'/settings.php';

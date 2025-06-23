@@ -88,3 +88,10 @@ export interface PegawaiIkatan { // Added PegawaiIkatan type
     created_at: string;
     updated_at: string;
 }
+
+export interface PegawaiJenis {
+    id: number;
+    nama: string;
+    created_at: string;
+    updated_at: string;
+}

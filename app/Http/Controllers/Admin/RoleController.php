@@ -23,7 +23,9 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Roles/Create');
+        return Inertia::render('Admin/Roles/Create', [
+            'allPermissions' => Permission::orderBy('name')->get()->map(fn($p) => ['id' => $p->id, 'name' => $p->name]),
+        ]);
     }
 
     /**
@@ -31,11 +33,17 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|unique:roles,name',
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:roles,name',
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'string|exists:permissions,name',
         ]);
 
-        Role::create(['name' => $request->name]);
+        $role = Role::create(['name' => $validated['name']]);
+
+        if (!empty($validated['permissions'])) {
+            $role->syncPermissions($validated['permissions']);
+        }
 
         return redirect()->route('admin.roles.index');
     }

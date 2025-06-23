@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\FungsionalController; // Added
 use App\Http\Controllers\Admin\PegawaiIkatanController; // Added
 use App\Http\Controllers\Admin\PegawaiJenisController; // Added
+use App\Http\Controllers\Admin\PegawaiController; // Added
 use App\Http\Controllers\Admin\JabatanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('pegawai-ikatan', PegawaiIkatanController::class)->except(['show', 'create', 'edit']); // Added
         Route::resource('pegawai-jenis', PegawaiJenisController::class)->except(['show', 'create', 'edit']); // Added
         Route::resource('jabatan', JabatanController::class)->except(['show']); // Allowing create and edit for Jabatan
+        Route::resource('pegawai', PegawaiController::class); // Added
     });
 });
 

@@ -1,11 +1,11 @@
+import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'; // Modal components
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from '@inertiajs/react';
-import InputError from '@/components/input-error';
-import { Checkbox } from '@/components/ui/checkbox';
 import React from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'; // Modal components
 
 interface Permission {
     id: number;
@@ -53,7 +53,6 @@ export default function CreateRoleModal({ allPermissions, closeModal, isOpen }: 
         }
     }, [isOpen, reset]);
 
-
     return (
         <Dialog open={isOpen} onOpenChange={(open) => !open && closeModal()}>
             <DialogContent className="sm:max-w-2xl">
@@ -85,9 +84,7 @@ export default function CreateRoleModal({ allPermissions, closeModal, isOpen }: 
                                             <Checkbox
                                                 id={`permission-create-${permission.id}`} // Ensure unique ID
                                                 checked={data.permissions.includes(permission.name)}
-                                                onCheckedChange={(checked) =>
-                                                    handlePermissionChange(permission.name, checked)
-                                                }
+                                                onCheckedChange={(checked) => handlePermissionChange(permission.name, checked)}
                                             />
                                             <Label
                                                 htmlFor={`permission-create-${permission.id}`} // Ensure unique ID

@@ -41,3 +41,43 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface Unit {
+    id: string;
+    name: string;
+    code: string;
+    parent_id: string | null;
+    parent?: Unit; // Optional parent object for eager loading
+    has_pagu: boolean;
+    has_rubrik: boolean;
+    created_at: string;
+    updated_at: string;
+    children_count?: number; // If you plan to count children
+}
+
+export interface PaginationLink {
+    url: string | null;
+    label: string;
+    active: boolean;
+}
+
+export interface PaginatedResponse<T> {
+    current_page: number;
+    data: T[];
+    first_page_url: string;
+    from: number;
+    last_page: number;
+    last_page_url: string;
+    links: PaginationLink[];
+    next_page_url: string | null;
+    path: string;
+    per_page: number;
+    prev_page_url: string | null;
+    to: number;
+    total: number;
+}
+
+export interface SelectOption {
+    value: string;
+    label: string;
+}

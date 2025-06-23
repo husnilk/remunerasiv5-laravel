@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
@@ -18,7 +18,7 @@ class RoleController extends Controller
         return Inertia::render('Admin/Roles/Index', [
             'roles' => Role::with('permissions')->get(),
             // Pass all permissions to the Index page for Create/Edit Modals
-            'permissions' => Permission::orderBy('name')->get()->map(fn($p) => ['id' => $p->id, 'name' => $p->name]),
+            'permissions' => Permission::orderBy('name')->get()->map(fn ($p) => ['id' => $p->id, 'name' => $p->name]),
         ]);
     }
 
@@ -47,7 +47,7 @@ class RoleController extends Controller
 
         $role = Role::create(['name' => $validated['name']]);
 
-        if (!empty($validated['permissions'])) {
+        if (! empty($validated['permissions'])) {
             $role->syncPermissions($validated['permissions']);
         }
 
@@ -76,7 +76,7 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:roles,name,' . $role->id,
+            'name' => 'required|string|max:255|unique:roles,name,'.$role->id,
             'permissions' => 'nullable|array',
             'permissions.*' => 'string|exists:permissions,name',
         ]);

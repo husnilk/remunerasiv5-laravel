@@ -1,11 +1,11 @@
+import InputError from '@/components/input-error';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useForm } from '@inertiajs/react';
-import InputError from '@/components/input-error';
-import { Checkbox } from '@/components/ui/checkbox';
 import React, { useEffect } from 'react';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 interface Permission {
     id: number;
@@ -27,7 +27,8 @@ interface Props {
 }
 
 export default function EditRoleModal({ role, allPermissions, closeModal, isOpen }: Props) {
-    const { data, setData, put, processing, errors, reset } = useForm({
+    const { data, setData, put, processing, errors } = useForm({
+        // removed reset
         name: '',
         permissions: [] as string[],
     });
@@ -37,7 +38,7 @@ export default function EditRoleModal({ role, allPermissions, closeModal, isOpen
         if (isOpen && role) {
             setData({
                 name: role.name || '',
-                permissions: role.permissions.map(p => p.name) || [],
+                permissions: role.permissions.map((p) => p.name) || [],
             });
         } else if (!isOpen) {
             // Optionally reset form when modal is closed if desired,
@@ -45,7 +46,6 @@ export default function EditRoleModal({ role, allPermissions, closeModal, isOpen
             // reset(); // Could be placed here if reset on close is preferred.
         }
     }, [role, isOpen, setData]);
-
 
     const handlePermissionChange = (permissionName: string, checked: boolean | 'indeterminate') => {
         if (checked === true) {
@@ -100,9 +100,7 @@ export default function EditRoleModal({ role, allPermissions, closeModal, isOpen
                                             <Checkbox
                                                 id={`permission-edit-${role.id}-${permission.id}`} // Unique ID
                                                 checked={data.permissions.includes(permission.name)}
-                                                onCheckedChange={(checked) =>
-                                                    handlePermissionChange(permission.name, checked)
-                                                }
+                                                onCheckedChange={(checked) => handlePermissionChange(permission.name, checked)}
                                             />
                                             <Label
                                                 htmlFor={`permission-edit-${role.id}-${permission.id}`} // Unique ID

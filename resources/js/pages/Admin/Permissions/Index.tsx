@@ -1,11 +1,10 @@
-import AppLayout from '@/layouts/app-layout';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Head, Link } from '@inertiajs/react'; // Added Link
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import React from 'react';
 import { Button } from '@/components/ui/button'; // Added Button
-import { Users } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types'; // Added Users icon for Roles button
+import { Head, Link } from '@inertiajs/react'; // Added Link
+import { Users } from 'lucide-react';
 
 interface Permission {
     id: number;
@@ -25,14 +24,12 @@ const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Permissions',
         href: '/admin/permissions',
-    }
+    },
 ];
 
 export default function PermissionsIndex({ permissions }: Props) {
     return (
-        <AppLayout
-           breadcrumbs={breadcrumbs}
-        >
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Permissions" />
 
             <div className="py-12">

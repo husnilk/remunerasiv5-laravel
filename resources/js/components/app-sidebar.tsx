@@ -1,22 +1,47 @@
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Users, ShieldCheck } from 'lucide-react';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'; // Removed SidebarGroup, SidebarGroupLabel
+import { type NavGroup, type NavItem } from '@/types';
+import { Link } from '@inertiajs/react'; // Removed usePage
+import { BookOpen, Database, Folder, LayoutGrid, ShieldCheck, Users } from 'lucide-react'; // Added Database icon
 import AppLogo from './app-logo';
 
-const mainNavItems: NavItem[] = [
+const mainNavGroups: NavGroup[] = [
     {
-        title: 'Dashboard',
-        href: route('dashboard'),
-        icon: LayoutGrid,
+        title: 'Platform',
+        items: [
+            {
+                title: 'Dashboard',
+                href: route('dashboard'),
+                icon: LayoutGrid,
+            },
+        ],
     },
     {
-        title: 'Roles',
-        href: route('admin.roles.index'),
-        icon: Users,
+        title: 'Access Management',
+        items: [
+            {
+                title: 'Roles',
+                href: route('admin.roles.index'),
+                icon: Users,
+            },
+            {
+                title: 'Permissions',
+                href: route('admin.permissions.index'),
+                icon: ShieldCheck,
+            },
+        ],
+    },
+    {
+        title: 'Data Master',
+        items: [
+            {
+                title: 'Units',
+                href: route('data-master.units.index'),
+                icon: Database, // Using Database icon for Units
+            },
+        ],
     },
 ];
 
@@ -49,7 +74,7 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent>
-                <NavMain items={mainNavItems} />
+                <NavMain groups={mainNavGroups} /> {/* Changed items to groups and mainNavItems to mainNavGroups */}
             </SidebarContent>
 
             <SidebarFooter>

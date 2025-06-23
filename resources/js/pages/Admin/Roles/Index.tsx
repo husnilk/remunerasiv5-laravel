@@ -1,10 +1,10 @@
-import AppLayout from '@/layouts/app-layout';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import AppLayout from '@/layouts/app-layout';
 import { Head, Link, router } from '@inertiajs/react';
-import { Pencil, PlusCircle, Trash2, ShieldCheck } from 'lucide-react'; // Added ShieldCheck
-import React, { useState } from 'react'; // Added useState
-import { Badge } from '@/components/ui/badge';
+import { Pencil, PlusCircle, ShieldCheck, Trash2 } from 'lucide-react'; // Added ShieldCheck
+import { useState } from 'react'; // Added useState
 import CreateRoleModal from './CreateRoleModal'; // Import the create modal
 import EditRoleModal from './EditRoleModal'; // Import the edit modal
 
@@ -64,13 +64,7 @@ export default function RolesIndex({ roles, permissions }: Props) {
     };
 
     return (
-        <AppLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    Manage Roles
-                </h2>
-            }
-        >
+        <AppLayout header={<h2 className="text-xl leading-tight font-semibold text-gray-800 dark:text-gray-200">Manage Roles</h2>}>
             <Head title="Roles" />
 
             <div className="py-12">
@@ -85,7 +79,7 @@ export default function RolesIndex({ roles, permissions }: Props) {
                             <PlusCircle className="mr-2 h-4 w-4" /> Create Role
                         </Button>
                     </div>
-                    <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
+                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <Table>
                                 <TableHeader>
@@ -108,25 +102,14 @@ export default function RolesIndex({ roles, permissions }: Props) {
                                                             {permission.name}
                                                         </Badge>
                                                     ))}
-                                                    {role.permissions.length === 0 && (
-                                                        <span className="text-xs text-gray-500">No permissions</span>
-                                                    )}
+                                                    {role.permissions.length === 0 && <span className="text-xs text-gray-500">No permissions</span>}
                                                 </div>
                                             </TableCell>
                                             <TableCell className="text-right">
-                                                <Button
-                                                    variant="outline"
-                                                    size="icon"
-                                                    onClick={() => openEditModal(role)}
-                                                    className="mr-2"
-                                                >
+                                                <Button variant="outline" size="icon" onClick={() => openEditModal(role)} className="mr-2">
                                                     <Pencil className="h-4 w-4" />
                                                 </Button>
-                                                <Button
-                                                    variant="destructive"
-                                                    size="icon"
-                                                    onClick={() => handleDelete(role.id)}
-                                                >
+                                                <Button variant="destructive" size="icon" onClick={() => handleDelete(role.id)}>
                                                     <Trash2 className="h-4 w-4" />
                                                 </Button>
                                             </TableCell>
@@ -140,20 +123,9 @@ export default function RolesIndex({ roles, permissions }: Props) {
                 </div>
             </div>
 
-            {isCreateModalOpen && (
-                <CreateRoleModal
-                    isOpen={isCreateModalOpen}
-                    closeModal={closeCreateModal}
-                    allPermissions={permissions}
-                />
-            )}
+            {isCreateModalOpen && <CreateRoleModal isOpen={isCreateModalOpen} closeModal={closeCreateModal} allPermissions={permissions} />}
             {isEditModalOpen && editingRole && (
-                <EditRoleModal
-                    isOpen={isEditModalOpen}
-                    closeModal={closeEditModal}
-                    role={editingRole}
-                    allPermissions={permissions}
-                />
+                <EditRoleModal isOpen={isEditModalOpen} closeModal={closeEditModal} role={editingRole} allPermissions={permissions} />
             )}
         </AppLayout>
     );

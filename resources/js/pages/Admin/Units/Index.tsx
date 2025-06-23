@@ -159,6 +159,13 @@ export default function UnitsIndexPage({ units, filters, allUnits }: UnitsIndexP
                                 <Button onClick={handleSearch}>Search</Button>
                             </div>
 
+                            <div className="mb-4 flex justify-end">
+                                <Button onClick={openCreateModal}>
+                                    <Icon name="Plus" className="mr-2" />
+                                    New Unit
+                                </Button>
+                            </div>
+
                             <Table>
                                 <TableHeader>
                                     <TableRow>

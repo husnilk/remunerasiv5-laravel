@@ -51,6 +51,11 @@ const mainNavGroups: NavGroup[] = [
                 href: route('data-master.pegawai-jenis.index'),
                 icon: Database, // Using Database icon for now, can be changed
             },
+            {
+                title: 'Fungsional',
+                href: route('data-master.fungsionals.index'),
+                icon: Database, // Using Database icon for now, can be changed
+            },
         ],
     },
 ];

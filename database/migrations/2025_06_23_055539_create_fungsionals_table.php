@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('kode');
             $table->integer('grade')->nullable();
             $table->integer('job_value')->nullable();
-            $table->integer('active')->default(true);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

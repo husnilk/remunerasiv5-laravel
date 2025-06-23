@@ -4,11 +4,18 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Head, Link, router } from '@inertiajs/react';
 import { Pencil, PlusCircle, Trash2 } from 'lucide-react';
 import React from 'react';
+import { Badge } from '@/components/ui/badge';
+
+interface Permission {
+    id: number;
+    name: string;
+}
 
 interface Role {
     id: number;
     name: string;
     guard_name: string;
+    permissions: Permission[];
 }
 
 interface Props {
@@ -48,6 +55,7 @@ export default function RolesIndex({ roles }: Props) {
                                     <TableRow>
                                         <TableHead>Name</TableHead>
                                         <TableHead>Guard</TableHead>
+                                        <TableHead>Permissions</TableHead>
                                         <TableHead className="text-right">Actions</TableHead>
                                     </TableRow>
                                 </TableHeader>
@@ -56,6 +64,18 @@ export default function RolesIndex({ roles }: Props) {
                                         <TableRow key={role.id}>
                                             <TableCell>{role.name}</TableCell>
                                             <TableCell>{role.guard_name}</TableCell>
+                                            <TableCell>
+                                                <div className="flex flex-wrap gap-1">
+                                                    {role.permissions.map((permission) => (
+                                                        <Badge key={permission.id} variant="secondary">
+                                                            {permission.name}
+                                                        </Badge>
+                                                    ))}
+                                                    {role.permissions.length === 0 && (
+                                                        <span className="text-xs text-gray-500">No permissions</span>
+                                                    )}
+                                                </div>
+                                            </TableCell>
                                             <TableCell className="text-right">
                                                 <Link href={route('admin.roles.edit', role.id)} className="mr-2">
                                                     <Button variant="outline" size="icon">

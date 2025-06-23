@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('units', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+        Schema::create('fungsionals', function (Blueprint $table) {
+            $table->id();
             $table->string('nama');
-            $table->string('kode')->unique();
-            $table->foreignUuid('parent_id')->nullable()->constrained('units')->nullOnDelete();
-            $table->boolean('has_pagu')->default(false);
-            $table->boolean('has_rubrik')->default(false);
+            $table->string('kode');
+            $table->integer('grade')->nullable();
+            $table->integer('job_value')->nullable();
+            $table->integer('active')->default(true);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('fungsionals');
     }
 };

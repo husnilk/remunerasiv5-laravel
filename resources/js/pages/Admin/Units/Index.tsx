@@ -21,6 +21,7 @@ import { PaginatedResponse, SelectOption, Unit } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react'; // Removed Link
 import { useState } from 'react'; // Removed useEffect
 import { toast } from 'sonner';
+import { Pencil, PlusCircle, Trash2 } from 'lucide-react';
 
 interface UnitsIndexProps {
     units: PaginatedResponse<Unit>;
@@ -130,16 +131,7 @@ export default function UnitsIndexPage({ units, filters, allUnits }: UnitsIndexP
 
     return (
         <AppLayout
-            title="Units"
-            header={
-                <div className="flex items-center justify-between">
-                    <h2 className="text-xl leading-tight font-semibold text-gray-800 dark:text-gray-200">Units</h2>
-                    <Button onClick={openCreateModal}>
-                        <Icon name="Plus" className="mr-2" />
-                        Create Unit
-                    </Button>
-                </div>
-            }
+
         >
             <Head title="Units" />
 
@@ -161,7 +153,7 @@ export default function UnitsIndexPage({ units, filters, allUnits }: UnitsIndexP
 
                             <div className="mb-4 flex justify-end">
                                 <Button onClick={openCreateModal}>
-                                    <Icon name="Plus" className="mr-2" />
+                                    <PlusCircle className="mr-2 h-4 w-4" />
                                     New Unit
                                 </Button>
                             </div>
@@ -187,11 +179,11 @@ export default function UnitsIndexPage({ units, filters, allUnits }: UnitsIndexP
                                             <TableCell>{unit.has_rubrik ? 'Yes' : 'No'}</TableCell>
                                             <TableCell className="text-right">
                                                 <Button variant="outline" size="sm" onClick={() => openEditModal(unit)} className="mr-2">
-                                                    <Icon name="Pencil" className="mr-1 h-4 w-4" />
+                                                    <Pencil className="mr-1 h-4 w-4" />
                                                     Edit
                                                 </Button>
                                                 <Button variant="destructive" size="sm" onClick={() => openDeleteModal(unit)}>
-                                                    <Icon name="Trash2" className="mr-1 h-4 w-4" />
+                                                    <Trash2 className="mr-1 h-4 w-4" />
                                                     Delete
                                                 </Button>
                                             </TableCell>
@@ -239,7 +231,7 @@ export default function UnitsIndexPage({ units, filters, allUnits }: UnitsIndexP
                                         <SelectValue placeholder="Select parent unit" />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="">
+                                        <SelectItem value="-">
                                             <em>No Parent</em>
                                         </SelectItem>
                                         {allUnits

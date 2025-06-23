@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('units', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+        Schema::create('jabatan_units', function (Blueprint $table) {
+            $table->id();
             $table->string('nama');
-            $table->string('kode')->unique();
-            $table->foreignUuid('parent_id')->nullable()->constrained('units')->nullOnDelete();
-            $table->boolean('has_pagu')->default(false);
-            $table->boolean('has_rubrik')->default(false);
+            $table->foreignId('jabatan_id')->constrained('jabatans')->cascadeOnDelete();
+            $table->foreignId('unit_id')->constrained('units')->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('jabatan_units');
     }
 };

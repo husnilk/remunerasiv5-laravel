@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('units', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+        Schema::create('pegawai_jenis', function (Blueprint $table) {
+            $table->id();
             $table->string('nama');
             $table->string('kode')->unique();
-            $table->foreignUuid('parent_id')->nullable()->constrained('units')->nullOnDelete();
-            $table->boolean('has_pagu')->default(false);
-            $table->boolean('has_rubrik')->default(false);
+            $table->foreignId('pegawai_ikatan_id')->constrained('pegawai_ikatans')->cascadeOnDelete();
+            $table->enum('jenis', ['Dosen', 'Tendik', 'Pegawai Lainnya']);
+            $table->boolean('has_remun')->default(true);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('units');
+        Schema::dropIfExists('pegawai_jenis');
     }
 };

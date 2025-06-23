@@ -81,3 +81,10 @@ export interface SelectOption {
     value: string;
     label: string;
 }
+
+export interface PegawaiIkatan { // Added PegawaiIkatan type
+    id: number;
+    nama: string;
+    created_at: string;
+    updated_at: string;
+}

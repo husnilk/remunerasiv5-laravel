@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DataMaster\StorePegawaiJenisRequest;
 use App\Http\Requests\DataMaster\UpdatePegawaiJenisRequest;
+use App\Models\PegawaiIkatanKerja;
 use App\Models\PegawaiJenis;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -16,16 +17,20 @@ class PegawaiJenisController extends Controller
      */
     public function index(Request $request)
     {
-        $query = PegawaiJenis::orderBy('nama');
+        $query = PegawaiJenis::with('pegawaiIkatan')->orderBy('nama');
 
         if ($request->has('search')) {
-            $query->where('nama', 'like', '%'.$request->search.'%');
+            $query->where('nama', 'like', '%'.$request->search.'%')
+                  ->orWhere('kode', 'like', '%'.$request->search.'%')
+                  ->orWhere('jenis', 'like', '%'.$request->search.'%');
         }
 
         $pegawaiJenis = $query->paginate($request->get('per_page', 10));
+        $pegawaiIkatanKerjas = PegawaiIkatanKerja::orderBy('nama')->get();
 
         return Inertia::render('Admin/PegawaiJenis/Index', [
             'pegawaiJenis' => $pegawaiJenis,
+            'pegawaiIkatanKerjas' => $pegawaiIkatanKerjas,
             'filters' => $request->only(['search']),
         ]);
     }

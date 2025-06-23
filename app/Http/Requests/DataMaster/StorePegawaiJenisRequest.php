@@ -32,6 +32,26 @@ class StorePegawaiJenisRequest extends FormRequest
                 'max:255',
                 Rule::unique(PegawaiJenis::class, 'nama')
             ],
+            'kode' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique(PegawaiJenis::class, 'kode')
+            ],
+            'pegawai_ikatan_id' => [
+                'required',
+                'integer',
+                Rule::exists('pegawai_ikatan_kerjas', 'id')
+            ],
+            'jenis' => [
+                'required',
+                'string',
+                Rule::in(['Dosen', 'Tendik', 'Pegawai Lainnya'])
+            ],
+            'has_remun' => [
+                'required',
+                'boolean'
+            ],
         ];
     }
 }

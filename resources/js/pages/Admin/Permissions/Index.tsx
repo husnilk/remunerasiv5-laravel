@@ -4,7 +4,8 @@ import { Head, Link } from '@inertiajs/react'; // Added Link
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import React from 'react';
 import { Button } from '@/components/ui/button'; // Added Button
-import { Users } from 'lucide-react'; // Added Users icon for Roles button
+import { Users } from 'lucide-react';
+import type { BreadcrumbItem } from '@/types'; // Added Users icon for Roles button
 
 interface Permission {
     id: number;
@@ -16,14 +17,21 @@ interface Props {
     permissions: Permission[];
 }
 
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Roles',
+        href: '/admin/roles/',
+    },
+    {
+        title: 'Permissions',
+        href: '/admin/permissions',
+    }
+];
+
 export default function PermissionsIndex({ permissions }: Props) {
     return (
         <AppLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                    Available Permissions
-                </h2>
-            }
+           breadcrumbs={breadcrumbs}
         >
             <Head title="Permissions" />
 

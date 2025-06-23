@@ -18,11 +18,6 @@ const mainNavItems: NavItem[] = [
         href: route('admin.roles.index'),
         icon: Users,
     },
-    {
-        title: 'Permissions',
-        href: route('admin.permissions.index'),
-        icon: ShieldCheck,
-    },
 ];
 
 const footerNavItems: NavItem[] = [

@@ -90,6 +90,17 @@ export interface PegawaiIkatanKerja {
     updated_at: string;
 }
 
+export type Fungsional = {
+    id: number; // Assuming auto-incrementing integer ID
+    nama: string;
+    kode: string;
+    grade: number | null;
+    job_value: number | null;
+    active: boolean;
+    created_at?: string; // Optional, as it might not always be needed on the frontend
+    updated_at?: string; // Optional
+};
+
 export interface PegawaiJenis {
     id: number;
     nama: string;

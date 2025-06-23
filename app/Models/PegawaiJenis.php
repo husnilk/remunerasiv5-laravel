@@ -28,6 +28,6 @@ class PegawaiJenis extends Model
      */
     public function pegawaiIkatan()
     {
-        return $this->belongsTo(PegawaiIkatanKerja::class, 'pegawai_ikatan_id');
+        return $this->belongsTo(PegawaiIkatan::class, 'pegawai_ikatan_id');
     }
 }

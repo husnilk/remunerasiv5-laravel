@@ -41,7 +41,7 @@ class StorePegawaiJenisRequest extends FormRequest
             'pegawai_ikatan_id' => [
                 'required',
                 'integer',
-                Rule::exists('pegawai_ikatan_kerjas', 'id')
+                Rule::exists('pegawai_ikatans', 'id')
             ],
             'jenis' => [
                 'required',

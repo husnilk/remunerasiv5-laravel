@@ -4,7 +4,7 @@ namespace App\Http\Requests\DataMaster;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Gate;
-use App\Models\PegawaiIkatanKerja; // Import the model
+use App\Models\PegawaiIkatan; // Import the model
 
 class UpdatePegawaiIkatanRequest extends FormRequest
 {
@@ -24,7 +24,7 @@ class UpdatePegawaiIkatanRequest extends FormRequest
      */
     public function rules(): array
     {
-        $pegawaiIkatanId = $this->route('pegawai_ikatan') instanceof PegawaiIkatanKerja ? $this->route('pegawai_ikatan')->id : $this->route('pegawai_ikatan');
+        $pegawaiIkatanId = $this->route('pegawai_ikatan') instanceof PegawaiIkatan ? $this->route('pegawai_ikatan')->id : $this->route('pegawai_ikatan');
         return [
             'nama' => 'required|string|max:255|unique:pegawai_ikatans,nama,' . $pegawaiIkatanId,
         ];

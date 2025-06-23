@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { PlusCircle, Edit, Trash2, ArrowUpDown, CheckCircle, XCircle } from 'lucide-react';
-import Pagination from '@/components/pagination';
+import { Pagination } from '@/components/pagination';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { debounce } from 'lodash';
@@ -106,7 +106,7 @@ export default function IndexJabatan() {
                                     <SelectValue placeholder='Filter by status' />
                                 </SelectTrigger>
                                 <SelectContent>
-                                    <SelectItem value=''>All Statuses</SelectItem>
+                                    <SelectItem value='-'>All Statuses</SelectItem>
                                     <SelectItem value='true'>Active</SelectItem>
                                     <SelectItem value='false'>Inactive</SelectItem>
                                 </SelectContent>

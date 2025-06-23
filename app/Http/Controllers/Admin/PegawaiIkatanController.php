@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\PegawaiIkatanKerja; // Correct model name
+use App\Models\PegawaiIkatan; // Correct model name
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Requests\DataMaster\StorePegawaiIkatanRequest;
@@ -16,7 +16,7 @@ class PegawaiIkatanController extends Controller
      */
     public function index(Request $request)
     {
-        $query = PegawaiIkatanKerja::orderBy('nama');
+        $query = PegawaiIkatan::orderBy('nama');
 
         if ($request->has('search')) {
             $query->where('nama', 'like', '%' . $request->search . '%');
@@ -35,7 +35,7 @@ class PegawaiIkatanController extends Controller
      */
     public function store(StorePegawaiIkatanRequest $request)
     {
-        PegawaiIkatanKerja::create($request->validated());
+        PegawaiIkatan::create($request->validated());
 
         return redirect()->route('data-master.pegawai-ikatan.index')->with('success', 'Pegawai Ikatan created successfully.');
     }
@@ -43,7 +43,7 @@ class PegawaiIkatanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatePegawaiIkatanRequest $request, PegawaiIkatanKerja $pegawaiIkatan)
+    public function update(UpdatePegawaiIkatanRequest $request, PegawaiIkatan $pegawaiIkatan)
     {
         $pegawaiIkatan->update($request->validated());
 
@@ -53,7 +53,7 @@ class PegawaiIkatanController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PegawaiIkatanKerja $pegawaiIkatan)
+    public function destroy(PegawaiIkatan $pegawaiIkatan)
     {
         // Add any checks if necessary, e.g., if it's linked to other models
         // For example:

@@ -56,6 +56,11 @@ const mainNavGroups: NavGroup[] = [
                 href: route('data-master.fungsionals.index'),
                 icon: Database, // Using Database icon for now, can be changed
             },
+            {
+                title: 'Jabatan',
+                href: route('data-master.jabatan.index'),
+                icon: Database, // Using Database icon for now, can be changed
+            },
         ],
     },
 ];

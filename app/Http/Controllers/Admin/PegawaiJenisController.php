@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DataMaster\StorePegawaiJenisRequest;
 use App\Http\Requests\DataMaster\UpdatePegawaiJenisRequest;
-use App\Models\PegawaiIkatanKerja;
+use App\Models\PegawaiIkatan;
 use App\Models\PegawaiJenis;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -26,7 +26,7 @@ class PegawaiJenisController extends Controller
         }
 
         $pegawaiJenis = $query->paginate($request->get('per_page', 10));
-        $pegawaiIkatanKerjas = PegawaiIkatanKerja::orderBy('nama')->get();
+        $pegawaiIkatanKerjas = PegawaiIkatan::orderBy('nama')->get();
 
         return Inertia::render('Admin/PegawaiJenis/Index', [
             'pegawaiJenis' => $pegawaiJenis,

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\DataMaster;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DataMaster\StoreUnitRequest;
@@ -26,7 +26,7 @@ class UnitController extends Controller
         $units = $query->paginate($request->get('per_page', 10));
         $allUnits = Unit::orderBy('name')->get()->map(fn ($unit) => ['value' => $unit->id, 'label' => $unit->name.' ('.$unit->code.')']);
 
-        return Inertia::render('DataMaster/Units/Index', [
+        return Inertia::render('Admin/Units/Index', [
             'units' => $units,
             'filters' => $request->only(['search']),
             'allUnits' => $allUnits,

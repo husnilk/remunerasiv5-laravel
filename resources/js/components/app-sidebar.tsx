@@ -61,6 +61,11 @@ const mainNavGroups: NavGroup[] = [
                 href: route('data-master.jabatan.index'),
                 icon: Database, // Using Database icon for now, can be changed
             },
+            {
+                title: 'Pegawai',
+                href: route('admin.pegawai.index'), // Corrected route name
+                icon: Users, // Using Users icon for Pegawai
+            },
         ],
     },
 ];

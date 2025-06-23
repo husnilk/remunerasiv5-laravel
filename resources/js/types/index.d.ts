@@ -90,6 +90,25 @@ export interface PegawaiIkatanKerja {
     updated_at: string;
 }
 
+export interface Pegawai {
+    id: number;
+    nama: string;
+    nik: string;
+    nip: string;
+    email: string;
+    nohp?: string | null;
+    tempat_lahir?: string | null;
+    tanggal_lahir?: string | null; // Consider using Date type if you parse it
+    jenis_kelamin: 1 | 2; // 1 for Laki-laki, 2 for Perempuan
+    npwp?: string | null;
+    pegawai_jenis_id: number;
+    profile_picture?: string | null;
+    aktif: 0 | 1; // 0 for Tidak Aktif, 1 for Aktif
+    created_at: string;
+    updated_at: string;
+    pegawai_jenis?: PegawaiJenis; // For eager loading
+}
+
 export type Fungsional = {
     id: number; // Assuming auto-incrementing integer ID
     nama: string;

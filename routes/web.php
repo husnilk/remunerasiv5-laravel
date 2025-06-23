@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\FungsionalController; // Added
 use App\Http\Controllers\Admin\PegawaiIkatanController; // Added
 use App\Http\Controllers\Admin\PegawaiJenisController; // Added
+use App\Http\Controllers\Admin\PegawaiController; // Added
 use App\Http\Controllers\Admin\JabatanController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,6 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::name('admin.')->prefix('admin')->group(function () {
         Route::resource('roles', RoleController::class)->except(['show']);
         Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
+        Route::resource('pegawai', PegawaiController::class); // Added
     });
 
     // TEMPORARILY REMOVED: ->middleware('permission:manage_datamaster') due to test environment issues

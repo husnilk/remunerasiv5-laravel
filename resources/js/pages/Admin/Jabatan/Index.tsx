@@ -79,17 +79,9 @@ export default function IndexJabatan() {
     };
 
     return (
-        <AppLayout title='Manage Jabatan'>
+        <AppLayout>
             <Head title='Jabatan Management' />
             <div className='space-y-4'>
-                <Heading title='Jabatan Management' description='A list of all Jabatan in the system.'>
-                    <Button asChild>
-                        <Link href={route('data-master.jabatan.create')}>
-                            <PlusCircle className='mr-2 h-4 w-4' />
-                            Create Jabatan
-                        </Link>
-                    </Button>
-                </Heading>
 
                 <Card>
                     <CardHeader>
@@ -182,7 +174,7 @@ export default function IndexJabatan() {
                                 )}
                             </TableBody>
                         </Table>
-                        <Pagination links={links} meta={meta} className='mt-4' />
+                        <Pagination links={links} className='mt-4' />
                     </CardContent>
                 </Card>
             </div>

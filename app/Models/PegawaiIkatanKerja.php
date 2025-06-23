@@ -10,7 +10,7 @@ class PegawaiIkatanKerja extends Model
     /** @use HasFactory<\Database\Factories\PegawaiIkatanKerjaFactory> */
     use HasFactory;
 
-    protected $fillable = ['nama']; // Added fillable property
+    protected $fillable = ['nama'];
 
-    protected $table = 'pegawai_ikatans'; // Ensuring correct table name
+    protected $table = 'pegawai_ikatan_kerjas'; // Corrected table name
 }

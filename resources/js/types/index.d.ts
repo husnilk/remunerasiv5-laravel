@@ -82,9 +82,10 @@ export interface SelectOption {
     label: string;
 }
 
-export interface PegawaiIkatan { // Added PegawaiIkatan type
+export interface PegawaiIkatanKerja {
     id: number;
     nama: string;
+    // Add any other fields from PegawaiIkatanKerja model you might need
     created_at: string;
     updated_at: string;
 }
@@ -92,6 +93,11 @@ export interface PegawaiIkatan { // Added PegawaiIkatan type
 export interface PegawaiJenis {
     id: number;
     nama: string;
+    kode: string;
+    pegawai_ikatan_id: number;
+    pegawai_ikatan?: PegawaiIkatanKerja; // For eager loading
+    jenis: 'Dosen' | 'Tendik' | 'Pegawai Lainnya';
+    has_remun: boolean;
     created_at: string;
     updated_at: string;
 }

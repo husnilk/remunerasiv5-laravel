@@ -17,5 +17,17 @@ class PegawaiJenis extends Model
      */
     protected $fillable = [
         'nama',
+        'kode',
+        'pegawai_ikatan_id',
+        'jenis',
+        'has_remun',
     ];
+
+    /**
+     * Get the pegawai ikatan that owns the PegawaiJenis.
+     */
+    public function pegawaiIkatan()
+    {
+        return $this->belongsTo(PegawaiIkatanKerja::class, 'pegawai_ikatan_id');
+    }
 }

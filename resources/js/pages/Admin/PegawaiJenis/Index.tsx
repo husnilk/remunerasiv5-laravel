@@ -11,29 +11,45 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
-import { PaginatedResponse, PegawaiJenis } from '@/types';
+import { PaginatedResponse, PegawaiJenis, PegawaiIkatanKerja } from '@/types';
 import { Head, router, useForm } from '@inertiajs/react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
 import { Pencil, PlusCircle, Trash2 } from 'lucide-react';
 
 interface PegawaiJenisIndexProps {
     pegawaiJenis: PaginatedResponse<PegawaiJenis>;
+    pegawaiIkatanKerjas: PegawaiIkatanKerja[];
     filters: { search?: string };
 }
 
-export default function PegawaiJenisIndexPage({ pegawaiJenis, filters }: PegawaiJenisIndexProps) {
+export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerjas, filters }: PegawaiJenisIndexProps) {
     const [searchTerm, setSearchTerm] = useState(filters.search || '');
     const [isCreateModalOpen, setCreateModalOpen] = useState(false);
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
     const [currentPegawaiJenis, setCurrentPegawaiJenis] = useState<PegawaiJenis | null>(null);
 
-    const { data, setData, post, put, delete: destroy, processing, errors, reset } = useForm({
+    const initialFormValues = {
         nama: '',
-    });
+        kode: '',
+        pegawai_ikatan_id: '',
+        jenis: '',
+        has_remun: true,
+    };
+
+    const { data, setData, post, put, delete: destroy, processing, errors, reset, clearErrors } = useForm(initialFormValues);
+
+    useEffect(() => {
+        // Clear errors when modal closes
+        if (!isCreateModalOpen && !isEditModalOpen) {
+            clearErrors();
+        }
+    }, [isCreateModalOpen, isEditModalOpen]);
 
     const handleSearch = () => {
         router.get(route('data-master.pegawai-jenis.index'), { search: searchTerm }, { preserveState: true });
@@ -48,6 +64,10 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, filters }: Pegawai
         setCurrentPegawaiJenis(item);
         setData({
             nama: item.nama,
+            kode: item.kode,
+            pegawai_ikatan_id: item.pegawai_ikatan_id ? String(item.pegawai_ikatan_id) : '',
+            jenis: item.jenis,
+            has_remun: item.has_remun,
         });
         setEditModalOpen(true);
     };
@@ -64,11 +84,13 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, filters }: Pegawai
                 setCreateModalOpen(false);
                 toast.success('Jenis Pegawai created successfully.');
             },
-            onError: (pageErrors) => {
-                if (pageErrors.nama) {
-                    toast.error(pageErrors.nama);
-                } else {
-                    toast.error('Failed to create Jenis Pegawai.');
+            onError: (pageErrors: any) => {
+                // Display all errors from the server
+                Object.values(pageErrors).forEach((error: any) => {
+                    toast.error(error);
+                });
+                if (Object.keys(pageErrors).length === 0) {
+                    toast.error('Failed to create Jenis Pegawai. Please check the form for errors.');
                 }
             },
         });
@@ -82,11 +104,13 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, filters }: Pegawai
                     setEditModalOpen(false);
                     toast.success('Jenis Pegawai updated successfully.');
                 },
-                onError: (pageErrors) => {
-                     if (pageErrors.nama) {
-                        toast.error(pageErrors.nama);
-                    } else {
-                        toast.error('Failed to update Jenis Pegawai.');
+                onError: (pageErrors: any) => {
+                    // Display all errors from the server
+                    Object.values(pageErrors).forEach((error: any) => {
+                        toast.error(error);
+                    });
+                    if (Object.keys(pageErrors).length === 0) {
+                        toast.error('Failed to update Jenis Pegawai. Please check the form for errors.');
                     }
                 },
             });
@@ -122,7 +146,7 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, filters }: Pegawai
                             <div className="mb-4 flex items-center">
                                 <Input
                                     type="text"
-                                    placeholder="Search jenis pegawai..."
+                                    placeholder="Search by nama, kode, jenis..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                     onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
@@ -142,6 +166,10 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, filters }: Pegawai
                                 <TableHeader>
                                     <TableRow>
                                         <TableHead>Nama</TableHead>
+                                        <TableHead>Kode</TableHead>
+                                        <TableHead>Ikatan Pegawai</TableHead>
+                                        <TableHead>Jenis</TableHead>
+                                        <TableHead>Remunerasi</TableHead>
                                         <TableHead className="text-right">Actions</TableHead>
                                     </TableRow>
                                 </TableHeader>
@@ -149,6 +177,10 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, filters }: Pegawai
                                     {pegawaiJenis.data.map((item) => (
                                         <TableRow key={item.id}>
                                             <TableCell>{item.nama}</TableCell>
+                                            <TableCell>{item.kode}</TableCell>
+                                            <TableCell>{item.pegawai_ikatan?.nama ?? '-'}</TableCell>
+                                            <TableCell>{item.jenis}</TableCell>
+                                            <TableCell>{item.has_remun ? 'Ya' : 'Tidak'}</TableCell>
                                             <TableCell className="text-right">
                                                 <Button variant="outline" size="sm" onClick={() => openEditModal(item)} className="mr-2">
                                                     <Pencil className="mr-1 h-4 w-4" />
@@ -179,13 +211,79 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, filters }: Pegawai
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={isCreateModalOpen ? handleCreate : handleUpdate}>
-                        <div className="grid gap-4 py-4">
+                        <div className="grid gap-6 py-4"> {/* Increased gap */}
+                            {/* Nama Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="nama" className="text-right">
                                     Nama
                                 </Label>
                                 <Input id="nama" value={data.nama} onChange={(e) => setData('nama', e.target.value)} className="col-span-3" />
-                                {errors.nama && <p className="col-span-4 text-sm text-red-600">{errors.nama}</p>}
+                                {errors.nama && <p className="col-span-4 text-right text-sm text-red-600">{errors.nama}</p>}
+                            </div>
+
+                            {/* Kode Field */}
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="kode" className="text-right">
+                                    Kode
+                                </Label>
+                                <Input id="kode" value={data.kode} onChange={(e) => setData('kode', e.target.value)} className="col-span-3" />
+                                {errors.kode && <p className="col-span-4 text-right text-sm text-red-600">{errors.kode}</p>}
+                            </div>
+
+                            {/* Pegawai Ikatan Field */}
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="pegawai_ikatan_id" className="text-right">
+                                    Ikatan Pegawai
+                                </Label>
+                                <Select value={data.pegawai_ikatan_id} onValueChange={(value) => setData('pegawai_ikatan_id', value)}>
+                                    <SelectTrigger className="col-span-3">
+                                        <SelectValue placeholder="Pilih Ikatan Pegawai" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {pegawaiIkatanKerjas.map((ikatan) => (
+                                            <SelectItem key={ikatan.id} value={String(ikatan.id)}>
+                                                {ikatan.nama}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                                {errors.pegawai_ikatan_id && <p className="col-span-4 text-right text-sm text-red-600">{errors.pegawai_ikatan_id}</p>}
+                            </div>
+
+                            {/* Jenis Pegawai Field */}
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="jenis" className="text-right">
+                                    Jenis Pegawai
+                                </Label>
+                                <Select value={data.jenis} onValueChange={(value) => setData('jenis', value)}>
+                                    <SelectTrigger className="col-span-3">
+                                        <SelectValue placeholder="Pilih Jenis" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="Dosen">Dosen</SelectItem>
+                                        <SelectItem value="Tendik">Tendik</SelectItem>
+                                        <SelectItem value="Pegawai Lainnya">Pegawai Lainnya</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                                {errors.jenis && <p className="col-span-4 text-right text-sm text-red-600">{errors.jenis}</p>}
+                            </div>
+
+                            {/* Has Remun Field */}
+                            <div className="grid grid-cols-4 items-center gap-4">
+                                <Label htmlFor="has_remun" className="text-right">
+                                    Remunerasi
+                                </Label>
+                                <div className="col-span-3 flex items-center">
+                                    <Checkbox
+                                        id="has_remun"
+                                        checked={data.has_remun}
+                                        onCheckedChange={(checked) => setData('has_remun', !!checked)}
+                                    />
+                                    <label htmlFor="has_remun" className="ml-2 text-sm">
+                                        Ada Remunerasi
+                                    </label>
+                                </div>
+                                {errors.has_remun && <p className="col-span-4 text-right text-sm text-red-600">{errors.has_remun}</p>}
                             </div>
                         </div>
                         <DialogFooter>

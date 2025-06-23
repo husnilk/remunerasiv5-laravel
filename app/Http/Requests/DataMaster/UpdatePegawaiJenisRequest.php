@@ -34,6 +34,26 @@ class UpdatePegawaiJenisRequest extends FormRequest
                 'max:255',
                 Rule::unique(PegawaiJenis::class, 'nama')->ignore($pegawaiJenisId)
             ],
+            'kode' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique(PegawaiJenis::class, 'kode')->ignore($pegawaiJenisId)
+            ],
+            'pegawai_ikatan_id' => [
+                'required',
+                'integer',
+                Rule::exists('pegawai_ikatan_kerjas', 'id')
+            ],
+            'jenis' => [
+                'required',
+                'string',
+                Rule::in(['Dosen', 'Tendik', 'Pegawai Lainnya'])
+            ],
+            'has_remun' => [
+                'required',
+                'boolean'
+            ],
         ];
     }
 }

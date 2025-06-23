@@ -17,13 +17,12 @@ class PermissionsSeeder extends Seeder
         // Define permission names
         $permissions = [
             // Role Permissions
-            'view roles',
-            'create roles',
-            'edit roles',
-            'delete roles',
+            'manage_admin',
+            'view_admin',
+            'manage_employee',
+            'view_employee',
 
             // Permission Permissions (usually just view for info)
-            'view permissions',
 
             // Add other permissions for your application modules
             // e.g., 'view users', 'edit users', 'manage settings', etc.
@@ -44,7 +43,7 @@ class PermissionsSeeder extends Seeder
 
         // Optionally, create other default roles
         $adminRole = Role::firstOrCreate(['name' => 'Admin', 'guard_name' => 'web']);
-        $adminRole->givePermissionTo(['view roles', 'create roles', 'edit roles', 'view permissions']);
+        $adminRole->givePermissionTo(['manage_admin', 'view_admin', 'manage_employee', 'view_employee']);
         // Add more specific permissions for Admin role as needed
 
         $this->command->info('Admin role created and assigned specific permissions.');

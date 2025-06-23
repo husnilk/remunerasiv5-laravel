@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DataMaster\StoreJabatanRequest;
-use App\Http\Requests\DataMaster\UpdateJabatanRequest;
+use App\Http\Requests\Admin\StoreJabatanRequest;
+use App\Http\Requests\Admin\UpdateJabatanRequest;
 use App\Models\Jabatan;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

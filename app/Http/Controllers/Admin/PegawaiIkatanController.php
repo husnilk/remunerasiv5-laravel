@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\PegawaiIkatan; // Correct model name
+use App\Http\Requests\Admin\StorePegawaiIkatanRequest;
+use App\Http\Requests\Admin\UpdatePegawaiIkatanRequest;
+use App\Models\PegawaiIkatan;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use App\Http\Requests\DataMaster\StorePegawaiIkatanRequest;
-use App\Http\Requests\DataMaster\UpdatePegawaiIkatanRequest;
+
+// Correct model name
 
 class PegawaiIkatanController extends Controller
 {
@@ -37,7 +39,7 @@ class PegawaiIkatanController extends Controller
     {
         PegawaiIkatan::create($request->validated());
 
-        return redirect()->route('data-master.pegawai-ikatan.index')->with('success', 'Pegawai Ikatan created successfully.');
+        return redirect()->route('admin.pegawai-ikatan.index')->with('success', 'Pegawai Ikatan created successfully.');
     }
 
     /**
@@ -47,7 +49,7 @@ class PegawaiIkatanController extends Controller
     {
         $pegawaiIkatan->update($request->validated());
 
-        return redirect()->route('data-master.pegawai-ikatan.index')->with('success', 'Pegawai Ikatan updated successfully.');
+        return redirect()->route('admin.pegawai-ikatan.index')->with('success', 'Pegawai Ikatan updated successfully.');
     }
 
     /**
@@ -62,6 +64,6 @@ class PegawaiIkatanController extends Controller
         // }
         $pegawaiIkatan->delete();
 
-        return redirect()->route('data-master.pegawai-ikatan.index')->with('success', 'Pegawai Ikatan deleted successfully.');
+        return redirect()->route('admin.pegawai-ikatan.index')->with('success', 'Pegawai Ikatan deleted successfully.');
     }
 }

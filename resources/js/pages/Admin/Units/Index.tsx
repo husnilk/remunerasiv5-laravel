@@ -1,4 +1,3 @@
-import { Icon } from '@/components/icon';
 import { Pagination } from '@/components/pagination';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -22,6 +21,7 @@ import { Head, router, useForm } from '@inertiajs/react'; // Removed Link
 import { useState } from 'react'; // Removed useEffect
 import { toast } from 'sonner';
 import { Pencil, PlusCircle, Trash2 } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface UnitsIndexProps {
     units: PaginatedResponse<Unit>;
@@ -130,27 +130,13 @@ export default function UnitsIndexPage({ units, filters, allUnits }: UnitsIndexP
     // If not, a useEffect to fetch them could be added here.
 
     return (
-        <AppLayout
-
-        >
+        <AppLayout>
             <Head title="Units" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
-                        <div className="p-6 text-gray-900 dark:text-gray-100">
-                            <div className="mb-4 flex items-center">
-                                <Input
-                                    type="text"
-                                    placeholder="Search units..."
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                    onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                                    className="mr-2 max-w-sm"
-                                />
-                                <Button onClick={handleSearch}>Search</Button>
-                            </div>
-
+                    <h2 className="text-2xl font-semibold tracking-tight">Manage Units</h2>
+                    <p className="text-muted-foreground">Manage available units in your Organization.</p>
                             <div className="mb-4 flex justify-end">
                                 <Button onClick={openCreateModal}>
                                     <PlusCircle className="mr-2 h-4 w-4" />
@@ -158,6 +144,8 @@ export default function UnitsIndexPage({ units, filters, allUnits }: UnitsIndexP
                                 </Button>
                             </div>
 
+                    <Card>
+                        <CardContent>
                             <Table>
                                 <TableHeader>
                                     <TableRow>
@@ -180,11 +168,9 @@ export default function UnitsIndexPage({ units, filters, allUnits }: UnitsIndexP
                                             <TableCell className="text-right">
                                                 <Button variant="outline" size="sm" onClick={() => openEditModal(unit)} className="mr-2">
                                                     <Pencil className="mr-1 h-4 w-4" />
-                                                    Edit
                                                 </Button>
                                                 <Button variant="destructive" size="sm" onClick={() => openDeleteModal(unit)}>
                                                     <Trash2 className="mr-1 h-4 w-4" />
-                                                    Delete
                                                 </Button>
                                             </TableCell>
                                         </TableRow>
@@ -192,8 +178,9 @@ export default function UnitsIndexPage({ units, filters, allUnits }: UnitsIndexP
                                 </TableBody>
                             </Table>
                             <Pagination className="mt-6" links={units.links} />
-                        </div>
-                    </div>
+
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
 

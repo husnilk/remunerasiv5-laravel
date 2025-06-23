@@ -1,12 +1,14 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
+import type { BreadcrumbItem } from '@/types'; // Import the edit modal
 import { Head, Link, router } from '@inertiajs/react';
 import { Pencil, PlusCircle, ShieldCheck, Trash2 } from 'lucide-react'; // Added ShieldCheck
 import { useState } from 'react'; // Added useState
 import CreateRoleModal from './CreateRoleModal'; // Import the create modal
-import EditRoleModal from './EditRoleModal'; // Import the edit modal
+import EditRoleModal from './EditRoleModal';
 
 interface Permission {
     id: number;
@@ -24,6 +26,13 @@ interface Props {
     roles: Role[];
     permissions: Permission[]; // Assuming permissions are passed for the create/edit modals
 }
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Roles',
+        href: '/admin/roles/',
+    },
+];
 
 export default function RolesIndex({ roles, permissions }: Props) {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -64,23 +73,25 @@ export default function RolesIndex({ roles, permissions }: Props) {
     };
 
     return (
-        <AppLayout header={<h2 className="text-xl leading-tight font-semibold text-gray-800 dark:text-gray-200">Manage Roles</h2>}>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Roles" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    <h2 className="text-2xl font-semibold tracking-tight">Roles</h2>
+                    <p className="text-muted-foreground">Manage user roles and their associated permissions.</p>
                     <div className="mb-4 flex justify-end gap-2">
+                        <Button onClick={openCreateModal} variant="outline">
+                            <PlusCircle className="mr-2 h-4 w-4" /> Create Role
+                        </Button>
                         <Link href={route('admin.permissions.index')}>
-                            <Button variant="outline">
+                            <Button variant="default">
                                 <ShieldCheck className="mr-2 h-4 w-4" /> Permissions
                             </Button>
                         </Link>
-                        <Button onClick={openCreateModal}>
-                            <PlusCircle className="mr-2 h-4 w-4" /> Create Role
-                        </Button>
                     </div>
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
-                        <div className="p-6 text-gray-900 dark:text-gray-100">
+                    <Card>
+                        <CardContent>
                             <Table>
                                 <TableHeader>
                                     <TableRow>
@@ -118,8 +129,8 @@ export default function RolesIndex({ roles, permissions }: Props) {
                                 </TableBody>
                             </Table>
                             {roles.length === 0 && <p className="mt-4 text-center">No roles found.</p>}
-                        </div>
-                    </div>
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
 

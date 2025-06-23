@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DataMaster\StoreUnitRequest;
-use App\Http\Requests\DataMaster\UpdateUnitRequest;
+use App\Http\Requests\Admin\StoreUnitRequest;
+use App\Http\Requests\Admin\UpdateUnitRequest;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 use Inertia\Inertia;

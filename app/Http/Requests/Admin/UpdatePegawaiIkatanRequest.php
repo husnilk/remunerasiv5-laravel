@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\DataMaster;
+namespace App\Http\Requests\Admin;
 
+use App\Models\PegawaiIkatan;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
-use App\Models\PegawaiIkatan; // Import the model
+
+// Import the model
 
 class UpdatePegawaiIkatanRequest extends FormRequest
 {

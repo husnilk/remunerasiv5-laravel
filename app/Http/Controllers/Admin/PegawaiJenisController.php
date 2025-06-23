@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DataMaster\StorePegawaiJenisRequest;
-use App\Http\Requests\DataMaster\UpdatePegawaiJenisRequest;
+use App\Http\Requests\Admin\StorePegawaiJenisRequest;
+use App\Http\Requests\Admin\UpdatePegawaiJenisRequest;
 use App\Models\PegawaiIkatan;
 use App\Models\PegawaiJenis;
 use Illuminate\Http\Request;
@@ -42,7 +42,7 @@ class PegawaiJenisController extends Controller
     {
         PegawaiJenis::create($request->validated());
 
-        return redirect()->route('data-master.pegawai-jenis.index')->with('success', 'Jenis Pegawai created successfully.');
+        return redirect()->route('admin.pegawai-jenis.index')->with('success', 'Jenis Pegawai created successfully.');
     }
 
     /**
@@ -52,7 +52,7 @@ class PegawaiJenisController extends Controller
     {
         $pegawaiJeni->update($request->validated());
 
-        return redirect()->route('data-master.pegawai-jenis.index')->with('success', 'Jenis Pegawai updated successfully.');
+        return redirect()->route('admin.pegawai-jenis.index')->with('success', 'Jenis Pegawai updated successfully.');
     }
 
     /**
@@ -66,6 +66,6 @@ class PegawaiJenisController extends Controller
         // }
         $pegawaiJeni->delete();
 
-        return redirect()->route('data-master.pegawai-jenis.index')->with('success', 'Jenis Pegawai deleted successfully.');
+        return redirect()->route('admin.pegawai-jenis.index')->with('success', 'Jenis Pegawai deleted successfully.');
     }
 }

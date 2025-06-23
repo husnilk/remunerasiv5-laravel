@@ -1,25 +1,18 @@
 import { Pagination } from '@/components/pagination';
 import { Button } from '@/components/ui/button';
-import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-} from '@/components/ui/dialog';
+import { Card, CardContent } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
-import { PaginatedResponse, PegawaiJenis, PegawaiIkatanKerja } from '@/types';
-import { Head, router, useForm } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
+import { BreadcrumbItem, PaginatedResponse, PegawaiIkatanKerja, PegawaiJenis } from '@/types';
+import { Head, Link, router, useForm } from '@inertiajs/react';
+import { Pencil, PlusCircle, Trash2, Users2 } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { Pencil, PlusCircle, Trash2 } from 'lucide-react';
 
 interface PegawaiJenisIndexProps {
     pegawaiJenis: PaginatedResponse<PegawaiJenis>;
@@ -27,8 +20,18 @@ interface PegawaiJenisIndexProps {
     filters: { search?: string };
 }
 
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Jenis Pegawai',
+        href: route('admin.pegawai-jenis.index')
+    },
+    {
+        title: 'Ikatan Kerja',
+        href: route('admin.pegawai-ikatan.index')
+    }
+];
+
 export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerjas, filters }: PegawaiJenisIndexProps) {
-    const [searchTerm, setSearchTerm] = useState(filters.search || '');
     const [isCreateModalOpen, setCreateModalOpen] = useState(false);
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -51,9 +54,6 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerja
         }
     }, [isCreateModalOpen, isEditModalOpen]);
 
-    const handleSearch = () => {
-        router.get(route('data-master.pegawai-jenis.index'), { search: searchTerm }, { preserveState: true });
-    };
 
     const openCreateModal = () => {
         reset();
@@ -79,7 +79,7 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerja
 
     const handleCreate = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('data-master.pegawai-jenis.store'), {
+        post(route('admin.pegawai-jenis.store'), {
             onSuccess: () => {
                 setCreateModalOpen(false);
                 toast.success('Jenis Pegawai created successfully.');
@@ -99,7 +99,7 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerja
     const handleUpdate = (e: React.FormEvent) => {
         e.preventDefault();
         if (currentPegawaiJenis) {
-            put(route('data-master.pegawai-jenis.update', currentPegawaiJenis.id), {
+            put(route('admin.pegawai-jenis.update', currentPegawaiJenis.id), {
                 onSuccess: () => {
                     setEditModalOpen(false);
                     toast.success('Jenis Pegawai updated successfully.');
@@ -119,7 +119,7 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerja
 
     const handleDelete = () => {
         if (currentPegawaiJenis) {
-            destroy(route('data-master.pegawai-jenis.destroy', currentPegawaiJenis.id), {
+            destroy(route('admin.pegawai-jenis.destroy', currentPegawaiJenis.id), {
                 onSuccess: () => {
                     setDeleteModalOpen(false);
                     toast.success('Jenis Pegawai deleted successfully.');
@@ -136,32 +136,27 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerja
     };
 
     return (
-        <AppLayout>
+        <AppLayout breadcrumbs={breadcrumbs} >
             <Head title="Jenis Pegawai" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
-                        <div className="p-6 text-gray-900 dark:text-gray-100">
-                            <div className="mb-4 flex items-center">
-                                <Input
-                                    type="text"
-                                    placeholder="Search by nama, kode, jenis..."
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                    onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                                    className="mr-2 max-w-sm"
-                                />
-                                <Button onClick={handleSearch}>Search</Button>
-                            </div>
+                    <h2 className="text-2xl font-semibold tracking-tight">Employee Type</h2>
+                    <p className="text-muted-foreground">Manage employee types in the system.</p>
+                    <div className="mb-4 flex gap-2 justify-end">
+                        <Button onClick={openCreateModal} variant="outline">
+                            <PlusCircle className="mr-2 h-4 w-4" />
+                            New Jenis Pegawai
+                        </Button>
+                        <Link href={route('admin.pegawai-ikatan.index')}>
+                            <Button variant="default">
+                                <Users2 className="mr-2 h-4 w-4" /> Ikatan Kerja
+                            </Button>
+                        </Link>
+                    </div>
 
-                            <div className="mb-4 flex justify-end">
-                                <Button onClick={openCreateModal}>
-                                    <PlusCircle className="mr-2 h-4 w-4" />
-                                    New Jenis Pegawai
-                                </Button>
-                            </div>
-
+                    <Card>
+                        <CardContent>
                             <Table>
                                 <TableHeader>
                                     <TableRow>
@@ -184,11 +179,9 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerja
                                             <TableCell className="text-right">
                                                 <Button variant="outline" size="sm" onClick={() => openEditModal(item)} className="mr-2">
                                                     <Pencil className="mr-1 h-4 w-4" />
-                                                    Edit
                                                 </Button>
                                                 <Button variant="destructive" size="sm" onClick={() => openDeleteModal(item)}>
                                                     <Trash2 className="mr-1 h-4 w-4" />
-                                                    Delete
                                                 </Button>
                                             </TableCell>
                                         </TableRow>
@@ -196,8 +189,8 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerja
                                 </TableBody>
                             </Table>
                             <Pagination className="mt-6" links={pegawaiJenis.links} />
-                        </div>
-                    </div>
+                        </CardContent>
+                    </Card>
                 </div>
             </div>
 
@@ -211,7 +204,9 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerja
                         </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={isCreateModalOpen ? handleCreate : handleUpdate}>
-                        <div className="grid gap-6 py-4"> {/* Increased gap */}
+                        <div className="grid gap-6 py-4">
+                            {' '}
+                            {/* Increased gap */}
                             {/* Nama Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="nama" className="text-right">
@@ -220,7 +215,6 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerja
                                 <Input id="nama" value={data.nama} onChange={(e) => setData('nama', e.target.value)} className="col-span-3" />
                                 {errors.nama && <p className="col-span-4 text-right text-sm text-red-600">{errors.nama}</p>}
                             </div>
-
                             {/* Kode Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="kode" className="text-right">
@@ -229,7 +223,6 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerja
                                 <Input id="kode" value={data.kode} onChange={(e) => setData('kode', e.target.value)} className="col-span-3" />
                                 {errors.kode && <p className="col-span-4 text-right text-sm text-red-600">{errors.kode}</p>}
                             </div>
-
                             {/* Pegawai Ikatan Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="pegawai_ikatan_id" className="text-right">
@@ -249,7 +242,6 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerja
                                 </Select>
                                 {errors.pegawai_ikatan_id && <p className="col-span-4 text-right text-sm text-red-600">{errors.pegawai_ikatan_id}</p>}
                             </div>
-
                             {/* Jenis Pegawai Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="jenis" className="text-right">
@@ -267,7 +259,6 @@ export default function PegawaiJenisIndexPage({ pegawaiJenis, pegawaiIkatanKerja
                                 </Select>
                                 {errors.jenis && <p className="col-span-4 text-right text-sm text-red-600">{errors.jenis}</p>}
                             </div>
-
                             {/* Has Remun Field */}
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Label htmlFor="has_remun" className="text-right">

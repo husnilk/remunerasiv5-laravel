@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\DataMaster;
+namespace App\Http\Requests\Admin;
 
 use App\Models\Jabatan;
 use Illuminate\Foundation\Http\FormRequest;

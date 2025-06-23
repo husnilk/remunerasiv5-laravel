@@ -24,16 +24,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('roles', RoleController::class)->except(['show']);
         Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
         Route::resource('pegawai', PegawaiController::class); // Added
-    });
-
-    // TEMPORARILY REMOVED: ->middleware('permission:manage_datamaster') due to test environment issues
-    Route::name('data-master.')->prefix('data-master')->group(function () {
         Route::resource('units', UnitController::class)->except(['show', 'create', 'edit']);
         Route::resource('fungsionals', FungsionalController::class)->except(['show', 'create', 'edit']); // Added
         Route::resource('pegawai-ikatan', PegawaiIkatanController::class)->except(['show', 'create', 'edit']); // Added
         Route::resource('pegawai-jenis', PegawaiJenisController::class)->except(['show', 'create', 'edit']); // Added
         Route::resource('jabatan', JabatanController::class)->except(['show']); // Allowing create and edit for Jabatan
     });
+
 });
 
 require __DIR__.'/settings.php';

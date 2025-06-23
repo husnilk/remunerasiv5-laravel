@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\DataMaster;
+namespace App\Http\Requests\Admin;
 
+use App\Models\Fungsional;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Models\Fungsional;
 
 class UpdateFungsionalRequest extends FormRequest
 {

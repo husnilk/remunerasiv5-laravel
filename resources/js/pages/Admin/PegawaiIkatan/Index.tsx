@@ -13,19 +13,31 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
-import { PaginatedResponse, PegawaiIkatan } from '@/types'; // Added PegawaiIkatan
-import { Head, router, useForm } from '@inertiajs/react';
+import { PaginatedResponse, PegawaiIkatan, BreadcrumbItem } from '@/types'; // Added PegawaiIkatan
+import { Head, Link, router, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { Pencil, PlusCircle, Trash2 } from 'lucide-react';
+import { Pencil, PlusCircle, Trash2, Users2 } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface PegawaiIkatanIndexProps {
     pegawaiIkatans: PaginatedResponse<PegawaiIkatan>; // Changed from units
     filters: { search?: string };
 }
 
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Jenis Pegawai',
+        href: route('admin.pegawai-jenis.index')
+    },
+    {
+        title: 'Ikatan Kerja',
+        href: route('admin.pegawai-ikatan.index')
+    }
+];
+
+
 export default function PegawaiIkatanIndexPage({ pegawaiIkatans, filters }: PegawaiIkatanIndexProps) {
-    const [searchTerm, setSearchTerm] = useState(filters.search || '');
     const [isCreateModalOpen, setCreateModalOpen] = useState(false);
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -34,10 +46,6 @@ export default function PegawaiIkatanIndexPage({ pegawaiIkatans, filters }: Pega
     const { data, setData, post, put, delete: destroy, processing, errors, reset } = useForm({
         nama: '', // Changed from unit fields
     });
-
-    const handleSearch = () => {
-        router.get(route('data-master.pegawai-ikatan.index'), { search: searchTerm }, { preserveState: true }); // Changed route
-    };
 
     const openCreateModal = () => {
         reset();
@@ -59,7 +67,7 @@ export default function PegawaiIkatanIndexPage({ pegawaiIkatans, filters }: Pega
 
     const handleCreate = (e: React.FormEvent) => {
         e.preventDefault();
-        post(route('data-master.pegawai-ikatan.store'), { // Changed route
+        post(route('admin.pegawai-ikatan.store'), { // Changed route
             onSuccess: () => {
                 setCreateModalOpen(false);
                 toast.success('Pegawai Ikatan created successfully.'); // Changed message
@@ -77,7 +85,7 @@ export default function PegawaiIkatanIndexPage({ pegawaiIkatans, filters }: Pega
     const handleUpdate = (e: React.FormEvent) => {
         e.preventDefault();
         if (currentPegawaiIkatan) {
-            put(route('data-master.pegawai-ikatan.update', currentPegawaiIkatan.id), { // Changed route
+            put(route('admin.pegawai-ikatan.update', currentPegawaiIkatan.id), { // Changed route
                 onSuccess: () => {
                     setEditModalOpen(false);
                     toast.success('Pegawai Ikatan updated successfully.'); // Changed message
@@ -95,7 +103,7 @@ export default function PegawaiIkatanIndexPage({ pegawaiIkatans, filters }: Pega
 
     const handleDelete = () => {
         if (currentPegawaiIkatan) {
-            destroy(route('data-master.pegawai-ikatan.destroy', currentPegawaiIkatan.id), { // Changed route
+            destroy(route('admin.pegawai-ikatan.destroy', currentPegawaiIkatan.id), { // Changed route
                 onSuccess: () => {
                     setDeleteModalOpen(false);
                     toast.success('Pegawai Ikatan deleted successfully.'); // Changed message
@@ -112,61 +120,57 @@ export default function PegawaiIkatanIndexPage({ pegawaiIkatans, filters }: Pega
     };
 
     return (
-        <AppLayout>
+        <AppLayout breadcrumbs={breadcrumbs} >
             <Head title="Pegawai Ikatan" /> {/* Changed title */}
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
-                        <div className="p-6 text-gray-900 dark:text-gray-100">
-                            <div className="mb-4 flex items-center">
-                                <Input
-                                    type="text"
-                                    placeholder="Search pegawai ikatan..." // Changed placeholder
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                    onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                                    className="mr-2 max-w-sm"
-                                />
-                                <Button onClick={handleSearch}>Search</Button>
-                            </div>
+                    <h2 className="text-2xl font-semibold tracking-tight">Ikatan Kerja Pegawai</h2>
+                    <p className="text-muted-foreground">Kelola jenis ikatan kerja pegawai.</p>
 
-                            <div className="mb-4 flex justify-end">
-                                <Button onClick={openCreateModal}>
+                            <div className="mb-4 flex gap-2 justify-end">
+                                <Button onClick={openCreateModal} variant="outline">
                                     <PlusCircle className="mr-2 h-4 w-4" />
-                                    New Pegawai Ikatan {/* Changed button text */}
+                                    Tambah Jenis Ikatan Kerja
                                 </Button>
+                                <Link href={route('admin.pegawai-jenis.index')}>
+                                    <Button variant="default">
+                                        <Users2 className="mr-2 h-4 w-4" /> Jenis Pegawai
+                                    </Button>
+                                </Link>
                             </div>
 
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Nama</TableHead> {/* Changed table header */}
-                                        <TableHead className="text-right">Actions</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {pegawaiIkatans.data.map((pegawaiIkatan) => ( // Changed variable name
-                                        <TableRow key={pegawaiIkatan.id}>
-                                            <TableCell>{pegawaiIkatan.nama}</TableCell> {/* Changed data field */}
-                                            <TableCell className="text-right">
-                                                <Button variant="outline" size="sm" onClick={() => openEditModal(pegawaiIkatan)} className="mr-2"> {/* Changed handler */}
-                                                    <Pencil className="mr-1 h-4 w-4" />
-                                                    Edit
-                                                </Button>
-                                                <Button variant="destructive" size="sm" onClick={() => openDeleteModal(pegawaiIkatan)}> {/* Changed handler */}
-                                                    <Trash2 className="mr-1 h-4 w-4" />
-                                                    Delete
-                                                </Button>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                            <Pagination className="mt-6" links={pegawaiIkatans.links} /> {/* Changed variable name */}
+                            <Card>
+                                <CardContent>
+
+                                    <Table>
+                                        <TableHeader>
+                                            <TableRow>
+                                                <TableHead>Nama</TableHead> {/* Changed table header */}
+                                                <TableHead className="text-right">Actions</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {pegawaiIkatans.data.map((pegawaiIkatan) => ( // Changed variable name
+                                                <TableRow key={pegawaiIkatan.id}>
+                                                    <TableCell>{pegawaiIkatan.nama}</TableCell> {/* Changed data field */}
+                                                    <TableCell className="text-right">
+                                                        <Button variant="outline" size="sm" onClick={() => openEditModal(pegawaiIkatan)} className="mr-2"> {/* Changed handler */}
+                                                            <Pencil className="mr-1 h-4 w-4" />
+                                                        </Button>
+                                                        <Button variant="destructive" size="sm" onClick={() => openDeleteModal(pegawaiIkatan)}> {/* Changed handler */}
+                                                            <Trash2 className="mr-1 h-4 w-4" />
+                                                        </Button>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                    <Pagination className="mt-6" links={pegawaiIkatans.links} /> {/* Changed variable name */}
+                                </CardContent>
+                            </Card>
+
                         </div>
-                    </div>
-                </div>
             </div>
 
             {/* Create/Edit Dialog */}

@@ -14,16 +14,24 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/app-layout';
-import { PaginatedResponse, Fungsional } from '@/types'; // Ensure Fungsional type is defined in @/types
-import { Head, router, useForm } from '@inertiajs/react';
+import { PaginatedResponse, Fungsional, BreadcrumbItem } from '@/types'; // Ensure Fungsional type is defined in @/types
+import { Head, Link, router, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { Pencil, PlusCircle, Trash2 } from 'lucide-react';
+import { Pencil, PlusCircle, ShieldCheck, Trash2 } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface FungsionalsIndexProps {
     fungsionals: PaginatedResponse<Fungsional>;
     filters: { search?: string };
 }
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Jabatan Fungsional',
+        href: route('admin.fungsionals.index'),
+    },
+];
 
 // Make sure Fungsional type is defined in '@/types/index.d.ts'
 // type Fungsional = {
@@ -127,69 +135,61 @@ export default function FungsionalsIndexPage({ fungsionals, filters }: Fungsiona
     };
 
     return (
-        <AppLayout>
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Fungsional" />
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800">
-                        <div className="p-6 text-gray-900 dark:text-gray-100">
-                            <div className="mb-4 flex items-center">
-                                <Input
-                                    type="text"
-                                    placeholder="Search fungsional (nama, kode)..."
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                    onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                                    className="mr-2 max-w-sm"
-                                />
-                                <Button onClick={handleSearch}>Search</Button>
-                            </div>
-
+                    <h2 className="text-2xl font-semibold tracking-tight">Jabatan Fungsional</h2>
+                    <p className="text-muted-foreground">Manage jabatan fungsional lecturers</p>
                             <div className="mb-4 flex justify-end">
                                 <Button onClick={openCreateModal}>
                                     <PlusCircle className="mr-2 h-4 w-4" />
                                     New Fungsional
                                 </Button>
+
                             </div>
 
-                            <Table>
-                                <TableHeader>
-                                    <TableRow>
-                                        <TableHead>Kode</TableHead>
-                                        <TableHead>Nama</TableHead>
-                                        <TableHead>Grade</TableHead>
-                                        <TableHead>Job Value</TableHead>
-                                        <TableHead>Status Aktif</TableHead>
-                                        <TableHead className="text-right">Actions</TableHead>
-                                    </TableRow>
-                                </TableHeader>
-                                <TableBody>
-                                    {fungsionals.data.map((fungsional) => (
-                                        <TableRow key={fungsional.id}>
-                                            <TableCell>{fungsional.kode}</TableCell>
-                                            <TableCell>{fungsional.nama}</TableCell>
-                                            <TableCell>{fungsional.grade ?? '-'}</TableCell>
-                                            <TableCell>{fungsional.job_value ?? '-'}</TableCell>
-                                            <TableCell>{fungsional.active ? 'Aktif' : 'Non-Aktif'}</TableCell>
-                                            <TableCell className="text-right">
-                                                <Button variant="outline" size="sm" onClick={() => openEditModal(fungsional)} className="mr-2">
-                                                    <Pencil className="mr-1 h-4 w-4" />
-                                                    Edit
-                                                </Button>
-                                                <Button variant="destructive" size="sm" onClick={() => openDeleteModal(fungsional)}>
-                                                    <Trash2 className="mr-1 h-4 w-4" />
-                                                    Delete
-                                                </Button>
-                                            </TableCell>
-                                        </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                            <Pagination className="mt-6" links={fungsionals.links} />
+                            <Card>
+                                <CardContent>
+
+                                    <Table>
+                                        <TableHeader>
+                                            <TableRow>
+                                                <TableHead>Kode</TableHead>
+                                                <TableHead>Nama</TableHead>
+                                                <TableHead>Grade</TableHead>
+                                                <TableHead>Job Value</TableHead>
+                                                <TableHead>Status Aktif</TableHead>
+                                                <TableHead className="text-right">Actions</TableHead>
+                                            </TableRow>
+                                        </TableHeader>
+                                        <TableBody>
+                                            {fungsionals.data.map((fungsional) => (
+                                                <TableRow key={fungsional.id}>
+                                                    <TableCell>{fungsional.kode}</TableCell>
+                                                    <TableCell>{fungsional.nama}</TableCell>
+                                                    <TableCell>{fungsional.grade ?? '-'}</TableCell>
+                                                    <TableCell>{fungsional.job_value ?? '-'}</TableCell>
+                                                    <TableCell>{fungsional.active ? 'Aktif' : 'Non-Aktif'}</TableCell>
+                                                    <TableCell className="text-right">
+                                                        <Button variant="outline" size="sm" onClick={() => openEditModal(fungsional)} className="mr-2">
+                                                            <Pencil className="mr-1 h-4 w-4" />
+                                                            Edit
+                                                        </Button>
+                                                        <Button variant="destructive" size="sm" onClick={() => openDeleteModal(fungsional)}>
+                                                            <Trash2 className="mr-1 h-4 w-4" />
+                                                            Delete
+                                                        </Button>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                        </TableBody>
+                                    </Table>
+                                    <Pagination className="mt-6" links={fungsionals.links} />
+                                </CardContent>
+                            </Card>
                         </div>
-                    </div>
-                </div>
             </div>
 
             {/* Create/Edit Dialog */}

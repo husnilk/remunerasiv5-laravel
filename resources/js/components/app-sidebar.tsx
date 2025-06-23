@@ -38,27 +38,27 @@ const mainNavGroups: NavGroup[] = [
         items: [
             {
                 title: 'Units',
-                href: route('data-master.units.index'),
+                href: route('admin.units.index'),
                 icon: Database, // Using Database icon for Units
             },
             {
                 title: 'Pegawai Ikatan', // Added
-                href: route('data-master.pegawai-ikatan.index'), // Added
+                href: route('admin.pegawai-ikatan.index'), // Added
                 icon: Database, // Using Database icon for now, can be changed
             },
             {
                 title: 'Jenis Pegawai',
-                href: route('data-master.pegawai-jenis.index'),
+                href: route('admin.pegawai-jenis.index'),
                 icon: Database, // Using Database icon for now, can be changed
             },
             {
                 title: 'Fungsional',
-                href: route('data-master.fungsionals.index'),
+                href: route('admin.fungsionals.index'),
                 icon: Database, // Using Database icon for now, can be changed
             },
             {
                 title: 'Jabatan',
-                href: route('data-master.jabatan.index'),
+                href: route('admin.jabatan.index'),
                 icon: Database, // Using Database icon for now, can be changed
             },
             {

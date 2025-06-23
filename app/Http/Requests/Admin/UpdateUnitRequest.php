@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\DataMaster;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreUnitRequest extends FormRequest
+class UpdateUnitRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,12 @@ class StoreUnitRequest extends FormRequest
      */
     public function rules(): array
     {
+        $unitId = $this->route('unit')->id;
+
         return [
             'name' => ['required', 'string', 'max:255'],
-            'code' => ['required', 'string', 'max:255', Rule::unique('units', 'code')],
-            'parent_id' => ['nullable', 'uuid', Rule::exists('units', 'id')],
+            'code' => ['required', 'string', 'max:255', Rule::unique('units', 'code')->ignore($unitId)],
+            'parent_id' => ['nullable', 'uuid', Rule::exists('units', 'id'), Rule::notIn([$unitId])], // Prevent self-parenting
             'has_pagu' => ['boolean'],
             'has_rubrik' => ['boolean'],
         ];

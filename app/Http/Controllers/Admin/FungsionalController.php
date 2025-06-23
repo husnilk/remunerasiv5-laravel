@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DataMaster\StoreFungsionalRequest;
-use App\Http\Requests\DataMaster\UpdateFungsionalRequest;
+use App\Http\Requests\Admin\StoreFungsionalRequest;
+use App\Http\Requests\Admin\UpdateFungsionalRequest;
 use App\Models\Fungsional;
 use Illuminate\Http\Request;
 use Inertia\Inertia;

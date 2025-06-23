@@ -18,8 +18,8 @@ class Unit extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'code',
+        'nama',
+        'kode',
         'parent_id',
         'has_pagu',
         'has_rubrik',

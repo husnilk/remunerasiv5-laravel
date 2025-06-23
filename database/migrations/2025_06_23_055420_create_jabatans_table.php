@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('nama');
             $table->integer('grade');
             $table->integer('job_value');
-            $table->integer('cg')->default(false);
+            $table->boolean('cg')->default(false);
             $table->integer('poin_skp')->nullable();
-            $table->integer('active')->default(true);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

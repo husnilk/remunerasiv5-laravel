@@ -41,6 +41,11 @@ const mainNavGroups: NavGroup[] = [
                 href: route('data-master.units.index'),
                 icon: Database, // Using Database icon for Units
             },
+            {
+                title: 'Pegawai Ikatan', // Added
+                href: route('data-master.pegawai-ikatan.index'), // Added
+                icon: Database, // Using Database icon for now, can be changed
+            },
         ],
     },
 ];

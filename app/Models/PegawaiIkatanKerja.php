@@ -9,4 +9,8 @@ class PegawaiIkatanKerja extends Model
 {
     /** @use HasFactory<\Database\Factories\PegawaiIkatanKerjaFactory> */
     use HasFactory;
+
+    protected $fillable = ['nama']; // Added fillable property
+
+    protected $table = 'pegawai_ikatans'; // Ensuring correct table name
 }

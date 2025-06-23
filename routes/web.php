@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UnitController;
+use App\Http\Controllers\Admin\PegawaiIkatanController; // Added
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -23,6 +24,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // TEMPORARILY REMOVED: ->middleware('permission:manage_datamaster') due to test environment issues
     Route::name('data-master.')->prefix('data-master')->group(function () {
         Route::resource('units', UnitController::class)->except(['show', 'create', 'edit']);
+        Route::resource('pegawai-ikatan', PegawaiIkatanController::class)->except(['show', 'create', 'edit']); // Added
     });
 });
 

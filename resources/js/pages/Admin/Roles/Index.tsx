@@ -2,9 +2,11 @@ import AppLayout from '@/layouts/app-layout';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Head, Link, router } from '@inertiajs/react';
-import { Pencil, PlusCircle, Trash2 } from 'lucide-react';
-import React from 'react';
+import { Pencil, PlusCircle, Trash2, ShieldCheck } from 'lucide-react'; // Added ShieldCheck
+import React, { useState } from 'react'; // Added useState
 import { Badge } from '@/components/ui/badge';
+import CreateRoleModal from './CreateRoleModal'; // Import the create modal
+import EditRoleModal from './EditRoleModal'; // Import the edit modal
 
 interface Permission {
     id: number;
@@ -20,13 +22,45 @@ interface Role {
 
 interface Props {
     roles: Role[];
+    permissions: Permission[]; // Assuming permissions are passed for the create/edit modals
 }
 
-export default function RolesIndex({ roles }: Props) {
+export default function RolesIndex({ roles, permissions }: Props) {
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const [editingRole, setEditingRole] = useState<Role | null>(null);
+
     const handleDelete = (roleId: number) => {
         if (confirm('Are you sure you want to delete this role?')) {
-            router.delete(route('admin.roles.destroy', roleId), { preserveScroll: true });
+            router.delete(route('admin.roles.destroy', roleId), {
+                preserveScroll: true,
+                onSuccess: () => {
+                    // Optionally close any open edit modal for the deleted role
+                    if (editingRole && editingRole.id === roleId) {
+                        setIsEditModalOpen(false);
+                        setEditingRole(null);
+                    }
+                },
+            });
         }
+    };
+
+    const openCreateModal = () => {
+        setIsCreateModalOpen(true);
+    };
+
+    const closeCreateModal = () => {
+        setIsCreateModalOpen(false);
+    };
+
+    const openEditModal = (role: Role) => {
+        setEditingRole(role);
+        setIsEditModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setIsEditModalOpen(false);
+        setEditingRole(null);
     };
 
     return (
@@ -41,12 +75,15 @@ export default function RolesIndex({ roles }: Props) {
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="mb-4 flex justify-end">
-                        <Link href={route('admin.roles.create')}>
-                            <Button>
-                                <PlusCircle className="mr-2 h-4 w-4" /> Create Role
+                    <div className="mb-4 flex justify-end gap-2">
+                        <Link href={route('admin.permissions.index')}>
+                            <Button variant="outline">
+                                <ShieldCheck className="mr-2 h-4 w-4" /> Permissions
                             </Button>
                         </Link>
+                        <Button onClick={openCreateModal}>
+                            <PlusCircle className="mr-2 h-4 w-4" /> Create Role
+                        </Button>
                     </div>
                     <div className="overflow-hidden bg-white shadow-sm dark:bg-gray-800 sm:rounded-lg">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
@@ -77,12 +114,19 @@ export default function RolesIndex({ roles }: Props) {
                                                 </div>
                                             </TableCell>
                                             <TableCell className="text-right">
-                                                <Link href={route('admin.roles.edit', role.id)} className="mr-2">
-                                                    <Button variant="outline" size="icon">
-                                                        <Pencil className="h-4 w-4" />
-                                                    </Button>
-                                                </Link>
-                                                <Button variant="destructive" size="icon" onClick={() => handleDelete(role.id)}>
+                                                <Button
+                                                    variant="outline"
+                                                    size="icon"
+                                                    onClick={() => openEditModal(role)}
+                                                    className="mr-2"
+                                                >
+                                                    <Pencil className="h-4 w-4" />
+                                                </Button>
+                                                <Button
+                                                    variant="destructive"
+                                                    size="icon"
+                                                    onClick={() => handleDelete(role.id)}
+                                                >
                                                     <Trash2 className="h-4 w-4" />
                                                 </Button>
                                             </TableCell>
@@ -95,6 +139,22 @@ export default function RolesIndex({ roles }: Props) {
                     </div>
                 </div>
             </div>
+
+            {isCreateModalOpen && (
+                <CreateRoleModal
+                    isOpen={isCreateModalOpen}
+                    closeModal={closeCreateModal}
+                    allPermissions={permissions}
+                />
+            )}
+            {isEditModalOpen && editingRole && (
+                <EditRoleModal
+                    isOpen={isEditModalOpen}
+                    closeModal={closeEditModal}
+                    role={editingRole}
+                    allPermissions={permissions}
+                />
+            )}
         </AppLayout>
     );
 }

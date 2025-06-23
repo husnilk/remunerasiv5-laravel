@@ -1,8 +1,10 @@
 import AppLayout from '@/layouts/app-layout';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Head } from '@inertiajs/react';
+import { Head, Link } from '@inertiajs/react'; // Added Link
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import React from 'react';
+import { Button } from '@/components/ui/button'; // Added Button
+import { Users } from 'lucide-react'; // Added Users icon for Roles button
 
 interface Permission {
     id: number;
@@ -27,6 +29,13 @@ export default function PermissionsIndex({ permissions }: Props) {
 
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    <div className="mb-4 flex justify-end">
+                        <Link href={route('admin.roles.index')}>
+                            <Button variant="outline">
+                                <Users className="mr-2 h-4 w-4" /> Roles
+                            </Button>
+                        </Link>
+                    </div>
                     <Card>
                         <CardHeader>
                             <CardTitle>Permissions List</CardTitle>

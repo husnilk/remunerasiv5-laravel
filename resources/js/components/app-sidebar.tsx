@@ -46,6 +46,11 @@ const mainNavGroups: NavGroup[] = [
                 href: route('data-master.pegawai-ikatan.index'), // Added
                 icon: Database, // Using Database icon for now, can be changed
             },
+            {
+                title: 'Jenis Pegawai',
+                href: route('data-master.pegawai-jenis.index'),
+                icon: Database, // Using Database icon for now, can be changed
+            },
         ],
     },
 ];

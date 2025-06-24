@@ -125,7 +125,6 @@ export function AppSidebar() {
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
-                <RoleSwitcherDropdown /> {/* Added Role Switcher Dropdown */}
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
@@ -135,6 +134,7 @@ export function AppSidebar() {
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
+                <NavUser />
             </SidebarHeader>
 
             <SidebarContent className="flex flex-col gap-y-2">

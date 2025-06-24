@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/select';
 import { FormEvent, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { IconArrowLeft } from '@tabler/icons-react';
+import { ArrowLeftCircle } from 'lucide-react';
 
 type RubrikKategoriProps = RubrikKategori & {
     rubrik_remun: RubrikRemun;
@@ -51,7 +51,7 @@ export default function Edit({ auth, rubrikKategori, rubrikRemuns }: EditPagePro
         <AppLayout user={auth.user} header={
             <div className='flex items-center'>
                 <Link href={route('admin.rubrik-kategori.index')} className='mr-2 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700'>
-                    <IconArrowLeft size={20} />
+                    <ArrowLeftCircle size={20} />
                 </Link>
                 <h2 className='font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight'>
                     Edit Rubrik Kategori: {rubrikKategori.nama}

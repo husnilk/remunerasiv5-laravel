@@ -10,8 +10,7 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { Button, buttonVariants } from '@/components/ui/button';
-import { IconAlertTriangle, IconEdit, IconPlus, IconSearch, IconTrash } from '@tabler/icons-react';
-import Pagination from '@/components/pagination';
+import { Pagination } from '@/components/pagination';
 import { Input } from '@/components/ui/input';
 import { FormEvent, useEffect, useState } from 'react';
 import {
@@ -34,6 +33,7 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
+import { PencilIcon, PlusCircle, Search, TrashIcon } from 'lucide-react';
 
 type RubrikKategoriProps = RubrikKategori & {
     rubrik_remun: RubrikRemun;
@@ -135,7 +135,7 @@ export default function Index({ auth, rubrikKategoris, rubrikRemuns, filters }: 
 
 
     return (
-        <AppLayout user={auth.user} header={<h2 className='font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight'>Rubrik Kategori</h2>}>
+        <AppLayout >
             <Head title='Rubrik Kategori' />
 
             <div className='py-12'>
@@ -152,11 +152,11 @@ export default function Index({ auth, rubrikKategoris, rubrikRemuns, filters }: 
                                         className='w-80'
                                     />
                                     <Button type='submit' size='icon' variant='outline'>
-                                        <IconSearch size={18} />
+                                        <Search size={18} />
                                     </Button>
                                 </form>
                                 <Button onClick={openCreateModal}>
-                                    <IconPlus size={18} className='mr-2' /> Add Rubrik Kategori
+                                    <PlusCircle size={18} className='mr-2' /> Add Rubrik Kategori
                                 </Button>
                             </div>
 
@@ -186,10 +186,10 @@ export default function Index({ auth, rubrikKategoris, rubrikRemuns, filters }: 
                                             <TableCell>{rk.rubrik_remun.nama}</TableCell>
                                             <TableCell className='space-x-2'>
                                                 <Button variant='outline' size='icon' onClick={() => openEditModal(rk)}>
-                                                    <IconEdit size={16} />
+                                                    <PencilIcon size={16} />
                                                 </Button>
                                                 <Button variant='destructive' size='icon' onClick={() => openDeleteModal(rk)}>
-                                                    <IconTrash size={16} />
+                                                    <TrashIcon size={16} />
                                                 </Button>
                                             </TableCell>
                                         </TableRow>

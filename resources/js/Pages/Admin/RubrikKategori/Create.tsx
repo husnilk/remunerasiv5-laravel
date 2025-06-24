@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/select';
 import { FormEvent } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { IconArrowLeft } from '@tabler/icons-react';
+import { ArrowLeftCircle } from 'lucide-react';
 
 type CreatePageProps = PageProps<{
     rubrikRemuns: RubrikRemun[];
@@ -38,7 +38,7 @@ export default function Create({ auth, rubrikRemuns }: CreatePageProps) {
         <AppLayout user={auth.user} header={
             <div className='flex items-center'>
                  <Link href={route('admin.rubrik-kategori.index')} className='mr-2 p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700'>
-                    <IconArrowLeft size={20} />
+                    <ArrowLeftCircle size={20} />
                 </Link>
                 <h2 className='font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight'>
                     Add Rubrik Kategori

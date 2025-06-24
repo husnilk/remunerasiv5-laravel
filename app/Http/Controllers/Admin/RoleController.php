@@ -4,12 +4,19 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class RoleController extends Controller
+class RoleController extends Controller implements HasMiddleware
 {
+    public static function middleware()
+    {
+        return [
+            'permission:admin.manage',
+        ];
+    }
     /**
      * Display a listing of the resource.
      */
@@ -103,4 +110,5 @@ class RoleController extends Controller
 
         return redirect()->route('admin.roles.index');
     }
+
 }

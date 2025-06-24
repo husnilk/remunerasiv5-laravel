@@ -9,4 +9,10 @@ class RubrikKategori extends Model
 {
     /** @use HasFactory<\Database\Factories\RubrikKategoriFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'nama',
+        'kode',
+        'rubrik_remun_id',
+    ];
 }

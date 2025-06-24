@@ -90,6 +90,14 @@ export interface PegawaiIkatanKerja {
     updated_at: string;
 }
 
+export type RubrikRemun = {
+    id: number;
+    nama: string;
+    active: number | boolean; // Allow boolean for frontend state, number for backend
+    created_at?: string;
+    updated_at?: string;
+};
+
 export interface Pegawai {
     id: number;
     nama: string;

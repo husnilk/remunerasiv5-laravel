@@ -66,6 +66,11 @@ const mainNavGroups: NavGroup[] = [
                 href: route('admin.pegawai.index'), // Corrected route name
                 icon: Users, // Using Users icon for Pegawai
             },
+            {
+                title: 'Rubrik Remun',
+                href: route('admin.rubrik-remun.index'),
+                icon: Database,
+            },
         ],
     },
 ];

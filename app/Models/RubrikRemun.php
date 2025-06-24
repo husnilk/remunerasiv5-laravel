@@ -9,4 +9,9 @@ class RubrikRemun extends Model
 {
     /** @use HasFactory<\Database\Factories\RubrikRemunFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'nama',
+        'active',
+    ];
 }

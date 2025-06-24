@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\PegawaiController; // Added
 use App\Http\Controllers\Admin\JabatanController;
 use App\Http\Controllers\RubrikKategoriController; // Added
 use App\Http\Controllers\RubrikRemunController; // Added
+use App\Http\Controllers\UserController; // Added for role switching
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -21,6 +22,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');
+
+    Route::post('/user/switch-role', [UserController::class, 'switchRole'])->name('user.switch-role');
 
     Route::name('admin.')->prefix('admin')->group(function () {
         Route::resource('roles', RoleController::class)->except(['show']);

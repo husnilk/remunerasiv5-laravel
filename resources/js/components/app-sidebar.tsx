@@ -5,7 +5,16 @@ import { RoleSwitcherDropdown } from '@/components/role-switcher-dropdown'; // A
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavGroup, type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Database, Folder, LayoutGrid, ShieldCheck, Users } from 'lucide-react'; // Added Database icon
+import {
+    AudioWaveform,
+    BookOpen, Command,
+    Database,
+    Folder,
+    GalleryVerticalEnd,
+    LayoutGrid,
+    ShieldCheck,
+    Users
+} from 'lucide-react'; // Added Database icon
 import AppLogo from './app-logo';
 
 const mainNavGroups: NavGroup[] = [
@@ -31,6 +40,11 @@ const mainNavGroups: NavGroup[] = [
                 title: 'Permissions',
                 href: route('admin.permissions.index'),
                 icon: ShieldCheck,
+            },
+            {
+                title: 'Pegawai',
+                href: route('admin.pegawai.index'), // Corrected route name
+                icon: Users, // Using Users icon for Pegawai
             },
         ],
     },
@@ -63,11 +77,6 @@ const mainNavGroups: NavGroup[] = [
                 icon: Database, // Using Database icon for now, can be changed
             },
             {
-                title: 'Pegawai',
-                href: route('admin.pegawai.index'), // Corrected route name
-                icon: Users, // Using Users icon for Pegawai
-            },
-            {
                 title: 'Rubrik Remun',
                 href: route('admin.rubrik-remun.index'),
                 icon: Database,
@@ -94,10 +103,29 @@ const footerNavItems: NavItem[] = [
     },
 ];
 
+const teams = [
+        {
+            name: "Acme Inc",
+            logo: GalleryVerticalEnd,
+            plan: "Enterprise",
+        },
+        {
+            name: "Acme Corp.",
+            logo: AudioWaveform,
+            plan: "Startup",
+        },
+        {
+            name: "Evil Corp.",
+            logo: Command,
+            plan: "Free",
+        },
+    ];
+
 export function AppSidebar() {
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
+                <RoleSwitcherDropdown /> {/* Added Role Switcher Dropdown */}
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton size="lg" asChild>
@@ -110,9 +138,6 @@ export function AppSidebar() {
             </SidebarHeader>
 
             <SidebarContent className="flex flex-col gap-y-2">
-                <div className="px-3"> {/* Added padding for the dropdown */}
-                    <RoleSwitcherDropdown />
-                </div>
                 <NavMain groups={mainNavGroups} />
             </SidebarContent>
 

@@ -10,7 +10,6 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { IconEdit, IconPlus, IconTrash } from '@tabler/icons-react';
 import {
     Dialog,
     DialogContent,
@@ -35,7 +34,8 @@ import {
     AlertDialogHeader,
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
-import { toast } from 'sonner'; // Assuming sonner is installed for notifications
+import { toast } from 'sonner';
+import { PencilIcon, PlusCircle, TrashIcon } from 'lucide-react'; // Assuming sonner is installed for notifications
 
 // Define props structure based on what Laravel Inertia typically sends
 interface RubrikRemunIndexPageProps {
@@ -150,7 +150,7 @@ export default function RubrikRemunIndex({ auth, rubrikRemuns, filters, flash }:
                             <div className='flex justify-between items-center mb-6'>
                                 <h3 className='text-lg font-medium'>Daftar Rubrik Remun</h3>
                                 <Button onClick={() => openModal()} size='sm'>
-                                    <IconPlus className='mr-2 h-4 w-4' />
+                                    <PlusCircle className='mr-2 h-4 w-4' />
                                     Tambah Rubrik Remun
                                 </Button>
                             </div>
@@ -189,14 +189,14 @@ export default function RubrikRemunIndex({ auth, rubrikRemuns, filters, flash }:
                                                         size='icon'
                                                         onClick={() => openModal(item)}
                                                     >
-                                                        <IconEdit className='h-4 w-4' />
+                                                        <PencilIcon className='h-4 w-4' />
                                                     </Button>
                                                     <Button
                                                         variant='destructive'
                                                         size='icon'
                                                         onClick={() => openDeleteConfirm(item)}
                                                     >
-                                                        <IconTrash className='h-4 w-4' />
+                                                        <TrashIcon className='h-4 w-4' />
                                                     </Button>
                                                 </TableCell>
                                             </TableRow>

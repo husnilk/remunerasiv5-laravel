@@ -1,0 +1,563 @@
+models:
+  LastLogin:
+    user_id: id foreign:users
+    last_login_at: timestamp nullable
+    last_login_ip: string:191 nullable
+    meta:
+      table: last_login
+
+  Pengumuman:
+    subject: string:191
+    pengumuman: text
+    tanggal: date
+    meta:
+      table: pengumuman
+
+  RefAlasan:
+    proses: integer nullable
+    kode: integer
+    alasan: text
+    meta:
+      table: ref_alasan
+
+  Unit:
+    simpeg_id: integer nullable
+    kode: string:191 nullable
+    nama: string:191
+    level: integer nullable
+    parent_id: id foreign:unit nullable
+    validator_id: biginteger unsigned nullable
+    pagu: tinyint default:0
+    rubrik: tinyint default:0
+    meta:
+      table: unit
+    relationships:
+      belongsTo: Unit, Validator
+      hasMany: Unit, PeriodeUnit, Pegawai, RubrikUnit, Validator, Jabatan
+
+  Fungsional:
+    simpeg_id: integer nullable
+    nama: string:191
+    singkatan: string:191 nullable
+    grade: integer nullable
+    skor: integer nullable
+    harga_jabatan: integer nullable
+    status: integer default:1
+    meta:
+      table: fungsional
+    relationships:
+      hasMany: Pegawai
+
+  Jabatan:
+    nama: string:191
+    unit_id: id foreign:unit
+    grade: integer
+    remun_penuh: biginteger
+    poin_optimal: integer
+    harga_jabatan: integer
+    cg: integer nullable
+    poin_skp: integer nullable
+    corporate_Grade: string:191 nullable
+    poin_SKP_Maksimal: integer nullable
+    meta:
+      table: jabatan
+    relationships:
+      belongsTo: Unit
+      hasMany: Pegawai, JabatanUnit
+
+  JabatanSimpeg:
+    simpeg_id: integer nullable
+    jabatan_id: id foreign:jabatan nullable
+    nama: string:191
+    tingkat: integer nullable
+    batas_pensiun: integer nullable
+    unit_kerja: integer unsigned
+    meta:
+      table: jabatan_simpeg
+    relationships:
+      belongsTo: Jabatan
+
+  JabatanUnit:
+    jabatan_id: id foreign:jabatan
+    unit_id: id foreign:unit
+    nama: string:191
+    poin_skp: double
+    meta:
+      table: jabatan_unit
+    relationships:
+      belongsTo: Jabatan, Unit
+
+  JenjangPendidikan:
+    simpeg_id: integer
+    jenjang: integer
+    nama: string:191
+    meta:
+      table: jenjang_pendidikan
+    relationships:
+      hasMany: PegawaiPendidikan
+
+  PangkatGolongan:
+    simpeg_id: string:191
+    pangkat: string:191
+    golongan: string:191
+    ruang: string:191
+    meta:
+      table: pangkat_golongan
+    relationships:
+      hasMany: Pegawai
+
+  Periode:
+    tahun: integer
+    periode: integer
+    nama_periode: string:191
+    tanggal_mulai: date nullable
+    tanggal_selesai: date nullable
+    keterangan: string:191
+    aktif: tinyint default:0
+    pir: double
+    kehadiran: integer default:1
+    skp: integer default:1
+    format_skp: integer default:1
+    calc_method: integer default:1
+    kinerja: integer default:1
+    bkd_tahun: integer nullable
+    bkd_semester: string:191 nullable
+    tgl_input_mulai: date nullable
+    tgl_input_selesai: date nullable
+    tgl_verifikasi_mulai: date nullable
+    tgl_verifikasi_selesai: date nullable
+    tgl_validasi_mulai: date nullable
+    tgl_validasi_selesai: date nullable
+    bkd_source_p1: integer default:0
+    bkd_tahun_p1: integer nullable
+    bkd_semester_p1: string:191 nullable
+    bkd_source_p2: integer default:0
+    bkd_tahun_p2: integer nullable
+    bkd_semester_p2: string:191 nullable
+    show_rupiah: integer default:0
+    user_confirmation: integer default:0
+    meta:
+      table: periode
+    relationships:
+      hasMany: PeriodeBulan, Skp, Kehadiran, Kegiatan, Kinerja, Validator, RemunPegawai
+
+  PeriodeBulan:
+    periode_id: id foreign:periode
+    bulan: integer
+    hari_kerja: integer
+    meta:
+      table: periode_bulan
+    relationships:
+      belongsTo: Periode
+
+  PeriodeUnit:
+    periode_id: id foreign:periode
+    unit_id: id foreign:unit
+    pagu: double nullable
+    pir_unit: double default:0
+    metode_bagi: integer nullable
+    status_finalisasi: integer default:0
+    tahapan: integer nullable
+    persentase: dobule nullable
+    meta:
+      table: periode_unit
+    relationships:
+      belongsTo: Periode, Unit
+
+  PegawaiJenis:
+    kode: string:191 unique
+    nama: string:191
+    meta:
+      table: pegawai_jenis
+    relationships:
+      hasMany: Pegawai, RubrikPegawai
+
+  Pegawai:
+    id: biginteger unsigned foreign:users.id primary
+    simpeg_id: integer
+    nama: string:191
+    nip: string:20
+    email: string:191 nullable
+    no_hp: string:191 nullable
+    tempat_lahir: string:191 nullable
+    tanggal_lahir: date nullable
+    jenis_kelamin: string:191 nullable
+    npwp: string:191 nullable
+    pangkat_golongan_id: id foreign:pangkat_golongan nullable
+    pegawai_jenis_id: id foreign:pegawai_jenis
+    tipe_pegawai: integer nullable
+    jabatan_id: id foreign:jabatan nullable
+    unit_id: id foreign:unit nullable
+    nidn: string:191 nullable
+    fungsional_id: id foreign:fungsional nullable
+    profile_picture: string:191 nullable
+    tanggal_pensiun: date nullable
+    atasan_id: id foreign:pegawai nullable
+    validator_id: integer unsigned nullable
+    aktif: integer default:0
+    status_honorer: string:255 nullable
+    meta:
+      table: pegawai
+    relationships:
+      belongsTo: JabatanPegawai, PangkatGolongan, Fungsional, Unit, PegawaiJenis, Pegawai:atasan,
+      hasMany: Pegawai:bawahans, Kehadiran, Kehadiran:atasan, Kehadiran:pejabatAtasan, Kinerja, Validator, RemunPegawai
+
+  PegawaiFungsional:
+    simpeg_id: integer
+    pegawai_id: id foreign:pegawai
+    fungsional_id: id foreign:fungsional
+    tmt: date nullable
+    meta:
+      table: pegawai_fungsional
+    relationships:
+      belongsTo: Pegawai, Fungsional
+
+  PegawaiJabatan:
+    simpeg_id: integer
+    pegawai_id: id foreign:pegawai
+    jabatan_id: id foreign:jabatan
+    tmt: date nullable
+    tgl_selesai: date nullable
+    persentase: double default:100
+    meta:
+      table: pegawai_jabatan
+    relationships:
+      belongsTo: Pegawai, Jabatan
+
+  PegawaiPendidikan:
+    simpeg_id: integer
+    pegawai_id: id foreign:pegawai
+    jenjang_id: id foreign:jenjang_pendidikan
+    institusi: string:191 nullable
+    tahun_lulus: year nullable
+    tanggal_mulai_dinas: date nullable
+    tanggal_selesai_dinas: date nullable
+    meta:
+      table: pegawai_pendidikan
+    relationships:
+      belongsTo: Pegawai, JenjangPendidikan
+
+  Validator:
+    periode_id: id foreign:periode
+    pegawai_id: id foreign:pegawai
+    unit_id: id foreign:unit nullable
+    jabatan: integer
+    meta:
+      table: validator
+    relationships:
+      belongsTo: Periode, Pegawai, Unit
+      hasMany: RemunPegawai, Pegawai:validitee
+
+  RubrikKategori:
+    kode: string:191
+    nama: string:191
+    meta:
+      table: rubrik_kategori
+    relationships:
+      hasMany: Rubrik
+
+  Rubrik:
+    rubrik_kategori_id: id foreign:rubrik_kategori
+    aktifitas: string:191
+    uraian: text
+    uraian_bukti: text
+    kode: string:191 nullable
+    jumlah: integer nullable
+    satuan: string:191 nullable
+    tipe_form: integer
+    personal: integer
+    bukti_penugasan: string:191 nullable
+    bukti_kinerja: string:191 nullable
+    fixed_poin: integer default:1
+    umum: integer default:0
+    aktif: integer default:1
+    flat_rate: integer default:0
+    rate: integer nullable
+    meta:
+      table: rubrik
+    relationships:
+      belongsTo: RubrikBkd, RubrikKategori
+      hasMany: RubrikDetail, RubrikPegawai, RubrikRule, RubrikUnit, Kegiatan
+
+  RubrikDetail:
+    rubrik_id: id foreign:rubrik
+    jabatan: string:191 nullable
+    poin: double
+    fixed_poin: integer default:1
+    status: integer
+    rule: integer default:0
+    meta:
+      table: rubrik_detail
+    relationships:
+      belongsTo: Rubrik
+      hasMany: Kinerja
+
+  RubrikPegawai:
+    pegawai_jenis_id: id foreign:pegawai_jenis
+    rubrik_id: id foreign:rubrik
+    meta:
+        table: rubrik_pegawai
+    relationships:
+      belongsTo: PegawaiJenis, Rubrik
+
+  RubrikRule:
+    rubrik_id: id foreign:rubrik
+    rule_id: string:50
+    value: integer default:0
+    meta:
+      table: rubrik_rule
+    relationships:
+      belongsTo: Rubrik
+
+  RubrikUnit:
+    rubrik_id: id foreign:rubrik
+    unit_id: id foreign:unit
+    meta:
+      table: rubrik_unit
+    relationships:
+      belongsTo: Rubrik, Unit
+
+  Skp:
+    pegawai_id: id foreign:pegawai
+    tahun: integer
+    periode_id: id foreign:periode
+    mulai: integer
+    akhir: integer
+    tanggal_mulai: date nullable
+    tanggal_selesai: date nullable
+    pejabat_penilai_id: id foreign:pegawai nullable
+    atasan_pejabat_penilai_id: id foreign:pegawai nullable
+    orientasi: integer nullable
+    integritas: integer nullable
+    komitmen: integer nullable
+    disiplin: integer nullable
+    kerjasama: integer nullable
+    kepemimpinan: integer nullable
+    keberatan: text nullable
+    tanggal_keberatan: date nullable
+    tanggapan: text nullable
+    tanggal_tanggapan: date nullable
+    keputusan: text nullable
+    tanggal_keputusan: date nullable
+    rekomendasi: text nullable
+    tanggal_buat: date nullable
+    tanggal_terima: date nullable
+    tanggal_terima_atasan: date nullable
+    status: integer
+    verified_at: date nullable
+    capaian_skp: double nullable
+    predikat_kinerja: integer nullable
+    rating_perilaku: integer nullable
+    rating_hasil_kerja: integer nullable
+    file_bukti: string:100 nullable
+    created_by: integer unsigned nullable
+    updated_by: integer unsigned nullable
+    verified_by: integer unsigned nullable
+    poin: integer nullable
+    poin_verifikasi: integer nullable
+    file_kontrak: string:191 nullable
+    tingkat_pelanggaran: integer default:0
+    meta:
+      table: skp
+    relationships:
+      belongsTo: Periode, Pegawai, Pegawai:atasan, Pegawai:pejabatAtasan
+
+  Kehadiran:
+    periode_id: id foreign:periode nullable
+    pegawai_id: id foreign:pegawai
+    created_by: id foreign:pegawai.id
+    status_pegawai: integer default:1
+    tahun: integer
+    bulan: integer
+    hadir: integer default:0
+    alpha: integer default:0
+    dinas_luas: integer default:0
+    tugas_belajar: integer default:0
+    cuti_sakit: integer default:0
+    cuti_izin: integer default:0
+    cuti_besar: integer default:0
+    cuti_melahirkan: integer default:0
+    cuti_non_tanggungan: integer default:0
+    cuti_tahunan: integer default:0
+    cuti_penting: integer default:0
+    cuti_bersalin_01: integer default:0
+    cuti_bersalin_02: integer default:0
+    cuti_bersalin_03: integer default:0
+    tl01: integer nullable
+    tl02: integer nullable
+    tl03: integer nullable
+    tl04: integer nullable
+    tl05: integer nullable
+    tl06: integer nullable
+    psw01: integer nullable
+    psw02: integer nullable
+    psw03: integer nullable
+    psw04: integer nullable
+    psw05: integer nullable
+    psw06: integer nullable
+    meta:
+      table: kehadiran
+    relationships:
+      belongsTo: Pegawai, Periode, Pegawai:createdBy
+
+  Kegiatan:
+    periode_id: id foreign:periode
+    rubrik_id: id foreign:rubrik
+    unit_id: id foreign:unit
+    nama: string:255
+    no_dokumen: string:191 nullable
+    tipe_form: integer nullable
+    file_bukti: string:191 nullable
+    link_bukti: string:191 nullable
+    created_by_id: integer unsigned
+    bukti_kinerja_bersama: integer default:0
+    bukti_kinerja_link: string:191 nullable
+    bukti_kinerja_file: string:191 nullable
+    validator_id: id foreign:validator
+    verifikator_id: id foreign:pegawai
+    meta:
+      table: kegiatan
+    relationships:
+      belongsTo: Periode, Rubrik, Validator
+      hasMany: Kinerja
+
+  Kinerja:
+    pegawai_id: id foreign:pegawai
+    kegiatan_id: id foreign:kegiatan
+    rubrik_detail_id: id foreign:rubrik_detail
+    periode_id: id foreign:periode
+    nama: string:191 nullable
+    jumlah: double
+    jumlah_original: double nullable
+    alasan_perubahans: text nullable
+    poin: double nullable
+    nomor_surat: string:191 nullable
+    tanggal_mulai: date nullable
+    tanggal_kaladuarsa: date nullable
+    jenis_dokumen: integer nullable
+    file_bukti: string:191 nullable
+    link_bukti: string:191 nullable
+    kode_alasan_verifikasi: integer nullable
+    status_verifikasi: integer nullable
+    verifikator_id: id foreign:pegawai nullable
+    alasan_verifikasi: string:191 nullable
+    status_validasi: integer nullable
+    validator_id: id foreign:pegawai nullable
+    kode_alasan_validasi: integer nullable
+    alasan_validasi: string:191 nullable
+    jabatan: string:191 nullable
+    operator_id: id foreign:pegawai.id nullable
+    final: integer default:0
+    persentase: dobule default:100
+    softDeletes
+    meta:
+      table: kinerja
+    relationships:
+      belongsTo: Pegawai, Periode, RubrikDetail, Kegiatan, Pegawai:operator
+      hasMany: KinerjaTanggapan, KinerjaLog
+
+  KinerjaTanggapan:
+    kinerja_id: id foreign:kinerja
+    proses: integer
+    user: integer
+    aktifitas: integer
+    log: text
+    read: integer default:0
+    meta:
+      table: kinerja_tanggapan
+    relationships:
+      belongsTo: Kinerja
+
+  KinerjaLog:
+    kinerja_id: id foreign:kinerja
+    user_id: id foreign:pegawai
+    user_role: string:191
+    crud: enum:C,R,U,D
+    poin: double nullable
+    jumlah: double nullable
+    keterangan: text nullable
+    meta:
+      table: kinerja_log
+    relationships:
+      belongsTo: Kinerja
+
+  RemunPegawai:
+    pegawai_id: id foreign:pegawai
+    periode_id: id foreign:periode
+    tahun: integer nullable
+    bulan: integer nullable
+    poin: integer nullable
+    absensi: integer nullable
+    skp: integer nullable
+    capaian_skp: double nullable
+    p1_bkd_upload: string:191 nullable
+    p1_bkd_sks: double nullable
+    p1_bkd_kesimpulan: string:191 nullable
+    p1_bkd_tanggal: date nullable
+    p2_bkd_upload: string:191 nullable
+    p2_bkd_sks: double nullable
+    p2_bkd_kesimpulan: string:191 nullable
+    p2_bkd_tanggal: date nullable
+    p2_bkd_adjust: double nullable
+    p2_bkd_status: integer nullable
+    jabatan_id: integer nullable
+    pendidikan_id: integer nullable
+    remun: integer nullable
+    remun_p1: integer nullable
+    remun_p2: integer nullable
+    bkd_status: integer nullable
+    aktif: integer nullable
+    validator_id: id foreign:validator nullable
+    poin_skp: double nullable
+    poin_kinerja: double nullable
+    fungsional_id: integer nullable
+    harga_jabatan: double nullable
+    status: integer default:0
+    sks_ajar_bkd: double default:0
+    sks_ajar_remun: double default:0
+    sks_ajar_lebih: double default:0
+    sks_ajar_pengurang: double default:0
+    meta:
+      table: remun_pegawai
+    relationships:
+      belongsTo: Pegawai, Periode, Validator
+      hasMany: RemunPegawaiDetail
+
+  RemunPegawaiDetail:
+    remun_pegawai_id: id foreign:remun_pegawai_detail
+    tahun: integer
+    bulan: integer
+    status_bkd: integer
+    status_kehadiran: integer
+    jabatan_id: integer nullable
+    jabatan_grade: integer nullable
+    jabatan_jv: integer nullable
+    jabatan_cg: integer default:0
+    fungsional_id: integer nullable
+    fungsional_grade: integer nullable
+    fungsional_jv: integer nullable
+    jenis_pegawai: integer
+    remun: integer nullable
+    p1: integer nullable
+    p2: integer nullable
+    poin_kinerja_usulan: double default:0
+    poin_kinerja: double default:0
+    poin_skp: double default:0
+    aktif: integer default:0
+    max_poin: integer default:56
+    meta:
+      table: remun_pegawai_detail
+    relationships:
+      belongsTo: RemunPegawai
+
+seeders: User, Unit, Fungsional, PangkatGolongan,
+  Jabatan, JabatanSimpeg, JabatanUnit, JenjangPendidikan,
+  Periode, PeriodeBulan, PeriodeUnit,
+  PegawaiJenis, Pegawai, PegawaiPendidikan, PegawaiJabatan, PegawaiFungsional, Validator
+  RubrikKategori, Rubrik, RubrikDetai, RubrikRule, RubrikUnit, RubrikPegawai
+  Skp, Kehadiran
+  Kegiatan, Kinerja, KinerjaTanggapan,
+  RemunPegawai, RemunPegawaiDetail
+
+controllers:
+

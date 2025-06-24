@@ -22,7 +22,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import React, { FormEventHandler, useEffect, useState } from 'react';
-import { InputError } from '@/components/input-error';
+import  InputError from '@/components/input-error';
 import { Pagination } from '@/components/pagination';
 import {
     AlertDialog,

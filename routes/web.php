@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\PegawaiIkatanController; // Added
 use App\Http\Controllers\Admin\PegawaiJenisController; // Added
 use App\Http\Controllers\Admin\PegawaiController; // Added
 use App\Http\Controllers\Admin\JabatanController;
+use App\Http\Controllers\RubrikRemunController; // Added
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -29,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('pegawai-ikatan', PegawaiIkatanController::class)->except(['show', 'create', 'edit']); // Added
         Route::resource('pegawai-jenis', PegawaiJenisController::class)->except(['show', 'create', 'edit']); // Added
         Route::resource('jabatan', JabatanController::class)->except(['show']); // Allowing create and edit for Jabatan
+        Route::resource('rubrik-remun', RubrikRemunController::class)->except(['show', 'create', 'edit']); // Added RubrikRemun
     });
 
 });

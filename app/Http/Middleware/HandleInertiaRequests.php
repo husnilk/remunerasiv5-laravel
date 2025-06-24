@@ -39,12 +39,32 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
+        $user = $request->user();
+        $userRoles = $user ? $user->getRoleNames() : collect();
+        $currentRole = null;
+
+        if ($user) {
+            if ($user->last_active_role_id) {
+                // Ensure lastActiveRole relationship is loaded or use it directly
+                $lastActiveRole = $user->lastActiveRole()->first(); // Or Role::findById($user->last_active_role_id)
+                if ($lastActiveRole) {
+                    $currentRole = $lastActiveRole->name;
+                }
+            }
+            // If currentRole is still null and user has roles, default to the first one
+            if (!$currentRole && $userRoles->isNotEmpty()) {
+                $currentRole = $userRoles->first();
+            }
+        }
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
             'quote' => ['message' => trim($message), 'author' => trim($author)],
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
+                'userRoles' => $userRoles,
+                'currentRole' => $currentRole,
             ],
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),

@@ -1,9 +1,10 @@
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar'; // Removed SidebarGroup, SidebarGroupLabel
+import { RoleSwitcherDropdown } from '@/components/role-switcher-dropdown'; // Added
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavGroup, type NavItem } from '@/types';
-import { Link } from '@inertiajs/react'; // Removed usePage
+import { Link } from '@inertiajs/react';
 import { BookOpen, Database, Folder, LayoutGrid, ShieldCheck, Users } from 'lucide-react'; // Added Database icon
 import AppLogo from './app-logo';
 
@@ -108,8 +109,11 @@ export function AppSidebar() {
                 </SidebarMenu>
             </SidebarHeader>
 
-            <SidebarContent>
-                <NavMain groups={mainNavGroups} /> {/* Changed items to groups and mainNavItems to mainNavGroups */}
+            <SidebarContent className="flex flex-col gap-y-2">
+                <div className="px-3"> {/* Added padding for the dropdown */}
+                    <RoleSwitcherDropdown />
+                </div>
+                <NavMain groups={mainNavGroups} />
             </SidebarContent>
 
             <SidebarFooter>

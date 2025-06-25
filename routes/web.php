@@ -1,19 +1,28 @@
 <?php
 
+use App\Http\Controllers\Admin\FungsionalController;
+use App\Http\Controllers\Admin\JabatanController;
+use App\Http\Controllers\Admin\PegawaiController;
+use App\Http\Controllers\Admin\PegawaiIkatanController;
+use App\Http\Controllers\Admin\PegawaiJenisController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\RubrikController;
+use App\Http\Controllers\Admin\RubrikKategoriController;
+use App\Http\Controllers\Admin\RubrikRemunController;
 use App\Http\Controllers\Admin\UnitController;
-use App\Http\Controllers\Admin\FungsionalController; // Added
-use App\Http\Controllers\Admin\PegawaiIkatanController; // Added
-use App\Http\Controllers\Admin\PegawaiJenisController; // Added
-use App\Http\Controllers\Admin\PegawaiController; // Added
-use App\Http\Controllers\Admin\JabatanController;
-use App\Http\Controllers\RubrikController; // Added
-use App\Http\Controllers\RubrikKategoriController; // Added
-use App\Http\Controllers\RubrikRemunController; // Added
-use App\Http\Controllers\UserController; // Added for role switching
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+// Added
+// Added
+// Added
+// Added
+// Added
+// Added
+// Added
+// Added for role switching
 
 Route::get('/', function () {
     return Inertia::render('welcome');

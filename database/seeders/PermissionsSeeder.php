@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -47,5 +48,12 @@ class PermissionsSeeder extends Seeder
         // Add more specific permissions for Admin role as needed
 
         $this->command->info('Admin role created and assigned specific permissions.');
+
+        $user = User::factory()->create([
+            'name' => 'Super Admin',
+            'email' => 'admin@example.com',
+        ]);
+
+        $user->assignRole($superAdminRole);
     }
 }

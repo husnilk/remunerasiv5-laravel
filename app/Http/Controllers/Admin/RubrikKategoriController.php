@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRubrikKategoriRequest;
 use App\Http\Requests\UpdateRubrikKategoriRequest;
 use App\Models\RubrikKategori;

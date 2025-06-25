@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Rubrik;
-use App\Models\RubrikKategori;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreRubrikRequest;
 use App\Http\Requests\UpdateRubrikRequest;
+use App\Models\Rubrik;
+use App\Models\RubrikKategori;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 

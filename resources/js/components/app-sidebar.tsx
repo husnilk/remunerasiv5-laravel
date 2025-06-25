@@ -1,7 +1,6 @@
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
-import { RoleSwitcherDropdown } from '@/components/role-switcher-dropdown'; // Added
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import { type NavGroup, type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
@@ -16,6 +15,7 @@ import {
     Users
 } from 'lucide-react'; // Added Database icon
 import AppLogo from './app-logo';
+import { RoleSwitcher } from '@/components/role-switcher';
 
 const mainNavGroups: NavGroup[] = [
     {
@@ -108,38 +108,20 @@ const footerNavItems: NavItem[] = [
     },
 ];
 
-const teams = [
-        {
-            name: "Acme Inc",
-            logo: GalleryVerticalEnd,
-            plan: "Enterprise",
-        },
-        {
-            name: "Acme Corp.",
-            logo: AudioWaveform,
-            plan: "Startup",
-        },
-        {
-            name: "Evil Corp.",
-            logo: Command,
-            plan: "Free",
-        },
-    ];
-
 export function AppSidebar() {
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
-                <SidebarMenu>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton size="lg" asChild>
-                            <Link href={route('dashboard')} prefetch>
-                                <AppLogo />
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                </SidebarMenu>
-                <NavUser />
+                {/*<SidebarMenu>*/}
+                {/*    <SidebarMenuItem>*/}
+                {/*        <SidebarMenuButton size="lg" asChild>*/}
+                {/*            <Link href={route('dashboard')} prefetch>*/}
+                {/*                <AppLogo />*/}
+                {/*            </Link>*/}
+                {/*        </SidebarMenuButton>*/}
+                {/*    </SidebarMenuItem>*/}
+                {/*</SidebarMenu>*/}
+                <RoleSwitcher versions={["1","2","3"]} defaultVersion="1" />
             </SidebarHeader>
 
             <SidebarContent className="flex flex-col gap-y-2">

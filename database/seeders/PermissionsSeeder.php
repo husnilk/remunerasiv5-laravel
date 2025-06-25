@@ -55,5 +55,6 @@ class PermissionsSeeder extends Seeder
         ]);
 
         $user->assignRole($superAdminRole);
+        $user->assignRole($adminRole);
     }
 }

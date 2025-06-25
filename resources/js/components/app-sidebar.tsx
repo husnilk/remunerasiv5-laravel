@@ -86,6 +86,11 @@ const mainNavGroups: NavGroup[] = [
                 href: route('admin.rubrik-kategori.index'),
                 icon: Database,
             },
+            {
+                title: 'Rubrik',
+                href: route('admin.rubrik.index'),
+                icon: Database, // You might want to choose a more specific icon
+            },
         ],
     },
 ];

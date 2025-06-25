@@ -1,20 +1,15 @@
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/components/ui/sidebar';
 import { type NavGroup, type NavItem } from '@/types';
-import { Link } from '@inertiajs/react';
 import {
-    AudioWaveform,
-    BookOpen, Command,
-    Database,
+    BookOpen, Database,
     Folder,
-    GalleryVerticalEnd,
     LayoutGrid,
     ShieldCheck,
     Users
 } from 'lucide-react'; // Added Database icon
-import AppLogo from './app-logo';
 import { RoleSwitcher } from '@/components/role-switcher';
 
 const mainNavGroups: NavGroup[] = [
@@ -112,16 +107,7 @@ export function AppSidebar() {
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>
-                {/*<SidebarMenu>*/}
-                {/*    <SidebarMenuItem>*/}
-                {/*        <SidebarMenuButton size="lg" asChild>*/}
-                {/*            <Link href={route('dashboard')} prefetch>*/}
-                {/*                <AppLogo />*/}
-                {/*            </Link>*/}
-                {/*        </SidebarMenuButton>*/}
-                {/*    </SidebarMenuItem>*/}
-                {/*</SidebarMenu>*/}
-                <RoleSwitcher versions={["1","2","3"]} defaultVersion="1" />
+                <RoleSwitcher  />
             </SidebarHeader>
 
             <SidebarContent className="flex flex-col gap-y-2">

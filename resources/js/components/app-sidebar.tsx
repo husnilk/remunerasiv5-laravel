@@ -30,16 +30,19 @@ const mainNavGroups: NavGroup[] = [
                 title: 'Roles',
                 href: route('admin.roles.index'),
                 icon: Users,
+                permission: 'admin.manage'
             },
             {
                 title: 'Permissions',
                 href: route('admin.permissions.index'),
                 icon: ShieldCheck,
+                permission: 'admin.manage'
             },
             {
                 title: 'Pegawai',
                 href: route('admin.pegawai.index'), // Corrected route name
                 icon: Users, // Using Users icon for Pegawai
+                permission: 'employee.manage',
             },
         ],
     },

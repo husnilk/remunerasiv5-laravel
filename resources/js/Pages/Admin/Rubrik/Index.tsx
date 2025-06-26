@@ -10,9 +10,8 @@ import {
     TableRow,
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { IconEdit, IconTrash, IconPlus, IconEye } from '@tabler/icons-react';
 import { Input } from '@/components/ui/input';
-import Pagination from '@/components/pagination';
+import { Pagination } from '@/components/pagination';
 import { FormEvent, useState } from 'react';
 import Heading from '@/components/heading';
 import {
@@ -25,6 +24,7 @@ import {
     DialogTrigger,
     DialogClose,
 } from '@/components/ui/dialog';
+import { EyeIcon, PencilIcon, PlusCircle, TrashIcon } from 'lucide-react';
 
 interface RubrikWithKategori extends Rubrik {
     rubrik_kategori: RubrikKategori;
@@ -57,7 +57,7 @@ export default function Index({ auth, rubriks, filters }: IndexPageProps) {
                 <Heading title='Rubriks Management' description='Manage all rubriks in the system.'>
                     <Button asChild>
                         <Link href={route('admin.rubrik.create')}>
-                            <IconPlus className='mr-2' /> Add Rubrik
+                            <PlusCircle className='mr-2' /> Add Rubrik
                         </Link>
                     </Button>
                 </Heading>
@@ -110,12 +110,12 @@ export default function Index({ auth, rubriks, filters }: IndexPageProps) {
                                 <TableCell className='text-right space-x-2'>
                                     <Button variant='outline' size='icon' asChild>
                                         <Link href={route('admin.rubrik.show', rubrik.id)}>
-                                            <IconEye size={18} />
+                                            <EyeIcon size={18} />
                                         </Link>
                                     </Button>
                                     <Button variant='outline' size='icon' asChild>
                                         <Link href={route('admin.rubrik.edit', rubrik.id)}>
-                                            <IconEdit size={18} />
+                                            <PencilIcon size={18} />
                                         </Link>
                                     </Button>
                                     <Dialog
@@ -128,7 +128,7 @@ export default function Index({ auth, rubriks, filters }: IndexPageProps) {
                                                 size='icon'
                                                 onClick={() => setConfirmDeleteId(rubrik.id)}
                                             >
-                                                <IconTrash size={18} />
+                                                <TrashIcon size={18} />
                                             </Button>
                                         </DialogTrigger>
                                         <DialogContent>

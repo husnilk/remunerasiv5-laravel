@@ -50,6 +50,7 @@ class HandleInertiaRequests extends Middleware
                 if ($lastActiveRole) {
                     $currentRole = $lastActiveRole->name;
                 }
+                $permissions = $lastActiveRole->permissions->pluck('name')->toArray();
             }
             // If currentRole is still null and user has roles, default to the first one
             if (!$currentRole && $userRoles->isNotEmpty()) {
@@ -65,6 +66,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $user,
                 'userRoles' => $userRoles,
                 'currentRole' => $currentRole,
+                'permissions' => $permissions
             ],
             'ziggy' => fn (): array => [
                 ...(new Ziggy)->toArray(),

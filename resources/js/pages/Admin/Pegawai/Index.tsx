@@ -72,7 +72,7 @@ export default function PegawaiIndexPage({ pegawais, filters }: PegawaiIndexProp
                     <div className="flex space-x-2">
                         <Link href={route('admin.pegawai.edit', pegawai.id)}>
                             <Button variant="outline" size="sm">
-                                <Pencil className="mr-1 h-4 w-4" /> Edit
+                                <Pencil className="mr-1 h-4 w-4" />
                             </Button>
                         </Link>
                         <Button
@@ -88,7 +88,7 @@ export default function PegawaiIndexPage({ pegawais, filters }: PegawaiIndexProp
                                 }
                             }}
                         >
-                            <Trash2 className="mr-1 h-4 w-4" /> Delete
+                            <Trash2 className="mr-1 h-4 w-4" />
                         </Button>
                     </div>
                 );
@@ -110,10 +110,22 @@ export default function PegawaiIndexPage({ pegawais, filters }: PegawaiIndexProp
             <Head title="Pegawai" />
             <div className="py-12">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <Card>
-                        <CardHeader>
+                    <h2 className="text-2xl font-semibold tracking-tight">Pegawai</h2>
+                    <p className="text-muted-foreground">
+                        List pegawai yang terdaftar dalam sistem.
+                    </p>
+
                             <div className="flex justify-between items-center">
-                                <CardTitle>Data Pegawai</CardTitle>
+                                <form onSubmit={handleSearch} className="mt-4 mb-2 flex items-center space-x-2">
+                                    <Input
+                                        type="text"
+                                        placeholder="Input keyword..."
+                                        value={searchTerm}
+                                        onChange={(e) => setSearchTerm(e.target.value)}
+                                        className="max-w-md"
+                                    />
+                                    <Button type="submit">Search</Button>
+                                </form>
                                 <Link href={route('admin.pegawai.create')}>
                                     <Button>
                                         <PlusCircle className="mr-2 h-4 w-4" />
@@ -121,17 +133,7 @@ export default function PegawaiIndexPage({ pegawais, filters }: PegawaiIndexProp
                                     </Button>
                                 </Link>
                             </div>
-                            <form onSubmit={handleSearch} className="mt-4 flex items-center space-x-2">
-                                <Input
-                                    type="text"
-                                    placeholder="Search by Nama, NIP, Email..."
-                                    value={searchTerm}
-                                    onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="max-w-sm"
-                                />
-                                <Button type="submit">Search</Button>
-                            </form>
-                        </CardHeader>
+                    <Card>
                         <CardContent>
                             <Table>
                                 <TableHeader>
@@ -142,9 +144,9 @@ export default function PegawaiIndexPage({ pegawais, filters }: PegawaiIndexProp
                                                     {header.isPlaceholder
                                                         ? null
                                                         : flexRender(
-                                                              header.column.columnDef.header,
-                                                              header.getContext()
-                                                          )}
+                                                            header.column.columnDef.header,
+                                                            header.getContext()
+                                                        )}
                                                 </TableHead>
                                             ))}
                                         </TableRow>
@@ -176,6 +178,7 @@ export default function PegawaiIndexPage({ pegawais, filters }: PegawaiIndexProp
                             <div className="mt-4">
                                 <ShadcnPagination links={pegawais.links} />
                             </div>
+
                         </CardContent>
                     </Card>
                 </div>

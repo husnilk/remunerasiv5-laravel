@@ -5,7 +5,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import AppLayout from '@/layouts/app-layout';
 import type { BreadcrumbItem } from '@/types'; // Import the edit modal
 import { Head, Link, router } from '@inertiajs/react';
-import { Pencil, PlusCircle, ShieldCheck, Trash2 } from 'lucide-react'; // Added ShieldCheck
+import { BadgeCheckIcon, Pencil, PlusCircle, ShieldCheck, Trash2 } from 'lucide-react'; // Added ShieldCheck
 import { useState } from 'react'; // Added useState
 import CreateRoleModal from './CreateRoleModal'; // Import the create modal
 import EditRoleModal from './EditRoleModal';
@@ -109,7 +109,7 @@ export default function RolesIndex({ roles, permissions }: Props) {
                                             <TableCell>
                                                 <div className="flex flex-wrap gap-1">
                                                     {role.permissions.map((permission) => (
-                                                        <Badge key={permission.id} variant="secondary">
+                                                        <Badge key={permission.id} variant="outline">
                                                             {permission.name}
                                                         </Badge>
                                                     ))}

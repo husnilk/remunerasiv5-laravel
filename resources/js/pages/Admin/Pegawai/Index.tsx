@@ -1,5 +1,5 @@
 import AppLayout from '@/layouts/app-layout';
-import { PaginatedResponse, Pegawai, BreadcrumbItem } from '@/types'; // Assuming Pegawai type exists
+import { PaginatedResponse, Pegawai, BreadcrumbItem } from '@/types';
 import { Head, Link, router } from '@inertiajs/react';
 import {
     ColumnDef,
@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/table";
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { PlusCircle, Pencil, Trash2 } from 'lucide-react';
+import { PlusCircle, Pencil, Trash2, Eye } from 'lucide-react'; // Added Eye icon
 import { Input } from '@/components/ui/input';
 import React from 'react';
 import { Pagination as ShadcnPagination } from '@/components/pagination'; // Assuming this is your pagination component
@@ -70,14 +70,20 @@ export default function PegawaiIndexPage({ pegawais, filters }: PegawaiIndexProp
                 const pegawai = row.original;
                 return (
                     <div className="flex space-x-2">
+                        <Link href={route('admin.pegawai.show', pegawai.id)}>
+                            <Button variant="outline" size="sm" title="View">
+                                <Eye className="h-4 w-4" />
+                            </Button>
+                        </Link>
                         <Link href={route('admin.pegawai.edit', pegawai.id)}>
-                            <Button variant="outline" size="sm">
-                                <Pencil className="mr-1 h-4 w-4" />
+                            <Button variant="outline" size="sm" title="Edit">
+                                <Pencil className="h-4 w-4" />
                             </Button>
                         </Link>
                         <Button
                             variant="destructive"
                             size="sm"
+                            title="Delete"
                             onClick={() => {
                                 if (confirm('Are you sure you want to delete this pegawai?')) {
                                     router.delete(route('admin.pegawai.destroy', pegawai.id), {
@@ -88,7 +94,7 @@ export default function PegawaiIndexPage({ pegawais, filters }: PegawaiIndexProp
                                 }
                             }}
                         >
-                            <Trash2 className="mr-1 h-4 w-4" />
+                            <Trash2 className="h-4 w-4" />
                         </Button>
                     </div>
                 );

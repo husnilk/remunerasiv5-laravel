@@ -7,6 +7,7 @@ use App\Models\Pegawai;
 use App\Models\PegawaiJenis;
 use App\Http\Requests\Admin\StorePegawaiRequest;
 use App\Http\Requests\Admin\UpdatePegawaiRequest;
+use App\Models\JabatanUnit;
 use Illuminate\Http\Request; // Keep for index if not type hinted specifically
 use Illuminate\Support\Facades\Storage; // For file handling
 use Inertia\Inertia;
@@ -57,8 +58,17 @@ class PegawaiController extends Controller
 
     public function show(Pegawai $pegawai)
     {
-        $pegawai->load('pegawaiJenis');
-        return Inertia::render('Admin/Pegawai/Show', ['pegawai' => $pegawai]);
+        $pegawai->load(
+            'pegawaiJenis',
+            'pegawaiJabatans.jabatanUnit.jabatan',
+            'pegawaiJabatans.jabatanUnit.unit'
+        );
+        $jabatanUnits = JabatanUnit::with(['jabatan', 'unit'])->orderBy('nama')->get();
+
+        return Inertia::render('Admin/Pegawai/Show', [
+            'pegawai' => $pegawai,
+            'jabatanUnits' => $jabatanUnits,
+        ]);
     }
 
     public function edit(Pegawai $pegawai)

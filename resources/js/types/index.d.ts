@@ -118,6 +118,44 @@ export interface Pegawai {
     created_at: string;
     updated_at: string;
     pegawai_jenis?: PegawaiJenis; // For eager loading
+    pegawai_jabatans?: PegawaiJabatan[]; // Added for PegawaiJabatan
+}
+
+// Added for Jabatan
+export interface Jabatan {
+    id: number;
+    nama: string;
+    grade?: number | null;
+    job_value?: number | null;
+    cg: boolean;
+    poin_skp?: number | null;
+    active: boolean;
+    created_at?: string;
+    updated_at?: string;
+}
+
+// Added for JabatanUnit
+export interface JabatanUnit {
+    id: number;
+    nama: string;
+    jabatan_id: number;
+    unit_id: string; // Assuming Unit ID is string (UUID)
+    jabatan?: Jabatan; // For eager loading
+    unit?: Unit; // For eager loading
+    created_at?: string;
+    updated_at?: string;
+}
+
+// Added for PegawaiJabatan
+export interface PegawaiJabatan {
+    id: number;
+    pegawai_id: number;
+    jabatan_unit_id: number;
+    tmt: string; // Dates are typically strings from backend, parse if needed
+    selesai?: string | null;
+    jabatan_unit?: JabatanUnit; // For eager loading
+    created_at?: string;
+    updated_at?: string;
 }
 
 export type Fungsional = {

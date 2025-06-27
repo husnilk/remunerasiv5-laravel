@@ -4,7 +4,6 @@ import { PageProps, Rubrik, RubrikKategori } from '@/types';
 import Heading from '@/components/heading';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { IconArrowLeft } from '@tabler/icons-react';
 
 interface RubrikWithKategori extends Rubrik {
     rubrik_kategori: RubrikKategori;

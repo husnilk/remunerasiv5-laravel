@@ -29,7 +29,10 @@ Route::get('/', function () {
     return Inertia::render('welcome');
 })->name('home');
 
-Route::middleware(['auth', 'verified'])->group(function () {
+use App\Http\Controllers\Pegawai\PegawaiFungsionalController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::apiResource('pegawai.fungsional', PegawaiFungsionalController::class);
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
     })->name('dashboard');

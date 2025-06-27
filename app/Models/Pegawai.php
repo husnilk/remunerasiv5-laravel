@@ -36,4 +36,9 @@ class Pegawai extends Model
     {
         return $this->belongsTo(PegawaiJenis::class);
     }
+
+    public function fungsionals()
+    {
+        return $this->hasMany(PegawaiFungsional::class);
+    }
 }

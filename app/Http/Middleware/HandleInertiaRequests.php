@@ -42,6 +42,7 @@ class HandleInertiaRequests extends Middleware
         $user = $request->user();
         $userRoles = $user ? $user->getRoleNames() : collect();
         $currentRole = null;
+        $permissions = [];
 
         if ($user) {
             if ($user->last_active_role_id) {

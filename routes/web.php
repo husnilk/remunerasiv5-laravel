@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\RubrikRemunController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PeriodeController; // Added for Periode
+use App\Http\Controllers\Admin\PegawaiJabatanController; // Added for PegawaiJabatan
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -39,7 +40,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::name('admin.')->prefix('admin')->group(function () {
         Route::resource('roles', RoleController::class)->except(['show']);
         Route::get('permissions', [PermissionController::class, 'index'])->name('permissions.index');
-        Route::resource('pegawai', PegawaiController::class); // Added
+        Route::resource('pegawai', PegawaiController::class);
+        Route::resource('pegawai.pegawai-jabatan', PegawaiJabatanController::class)
+            ->except(['index', 'show', 'edit', 'create'])
+            ->shallow()
+            ->names([
+                'store' => 'pegawai.pegawai-jabatan.store',
+                'update' => 'pegawai.pegawai-jabatan.update', // Explicitly naming to avoid conflict if any
+                'destroy' => 'pegawai.pegawai-jabatan.destroy',
+            ]);
         Route::resource('units', UnitController::class)->except(['show', 'create', 'edit']);
         Route::resource('fungsionals', FungsionalController::class)->except(['show', 'create', 'edit']); // Added
         Route::resource('pegawai-ikatan', PegawaiIkatanController::class)->except(['show', 'create', 'edit']); // Added

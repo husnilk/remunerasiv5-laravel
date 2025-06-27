@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pegawai extends Model
 {
@@ -35,5 +36,15 @@ class Pegawai extends Model
     public function pegawaiJenis()
     {
         return $this->belongsTo(PegawaiJenis::class);
+    }
+
+    /**
+     * Get all of the pegawaiJabatans for the Pegawai
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function pegawaiJabatans(): HasMany
+    {
+        return $this->hasMany(PegawaiJabatan::class);
     }
 }

@@ -89,6 +89,12 @@ const mainNavGroups: NavGroup[] = [
                 href: route('admin.rubrik.index'),
                 icon: Database, // You might want to choose a more specific icon
             },
+            {
+                title: 'Periode',
+                href: route('admin.periodes.index'),
+                icon: Database, // Using Database icon for now
+                // permission: 'periode.manage' // Optional: Add permission if needed
+            },
         ],
     },
 ];

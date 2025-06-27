@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\RubrikKategoriController;
 use App\Http\Controllers\Admin\RubrikRemunController;
 use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\PeriodeController; // Added for Periode
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -47,6 +48,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('rubrik-remun', RubrikRemunController::class)->except(['show', 'create', 'edit']); // Added RubrikRemun
         Route::resource('rubrik-kategori', RubrikKategoriController::class)->except(['show']); // Added RubrikKategori
         Route::resource('rubrik', RubrikController::class); // Added Rubrik
+
+        // Periode Management Routes
+        Route::resource('periodes', PeriodeController::class)->except(['show']);
+        Route::post('periodes/{periode}/activate', [PeriodeController::class, 'activate'])->name('periodes.activate');
+        Route::post('periodes/{periode}/deactivate', [PeriodeController::class, 'deactivate'])->name('periodes.deactivate');
     });
 
 });

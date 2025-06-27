@@ -1,4 +1,7 @@
-use App\Models\Fungsional;
+<?php
+
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use App\Models\Pegawai;
 use App\Models\PegawaiJenis;
@@ -54,12 +57,8 @@ class PegawaiController extends Controller
 
     public function show(Pegawai $pegawai)
     {
-        $pegawai->load(['pegawaiJenis', 'fungsionals.fungsional']);
-        $fungsionals = Fungsional::all();
-        return Inertia::render('Admin/Pegawai/Show', [
-            'pegawai' => $pegawai,
-            'fungsionals' => $fungsionals
-        ]);
+        $pegawai->load('pegawaiJenis');
+        return Inertia::render('Admin/Pegawai/Show', ['pegawai' => $pegawai]);
     }
 
     public function edit(Pegawai $pegawai)

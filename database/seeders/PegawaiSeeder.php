@@ -13,7 +13,7 @@ class PegawaiSeeder extends Seeder
      */
     public function run(): void
     {
-        Pegawai::factory(10)->create([
+        Pegawai::factory(50)->create([
             'pegawai_jenis_id' => 1, // Assuming you have a PegawaiJenis with ID 1
             'profile_picture' => 'profile_pictures/default.png', // Default profile picture
         ]);

@@ -16,7 +16,7 @@ class PegawaiJenisFactory extends Factory
      */
     public function definition(): array
     {
-        $ikatanKerja = \App\Models\PegawaiIkatanKerja::factory()->create(); // Ensure PegawaiIkatanKerja exists or is created
+        $ikatanKerja = \App\Models\PegawaiIkatan::factory()->create(); // Ensure PegawaiIkatanKerja exists or is created
 
         return [
             'nama' => fake()->jobTitle() . ' ' . fake()->word(),

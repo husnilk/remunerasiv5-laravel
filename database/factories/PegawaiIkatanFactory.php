@@ -2,16 +2,16 @@
 
 namespace Database\Factories;
 
-use App\Models\PegawaiIkatanKerja;
+use App\Models\PegawaiIkatan;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PegawaiIkatan>
  */
 
-class PegawaiIkatanKerjaFactory extends Factory
+class PegawaiIkatanFactory extends Factory
 {
-    protected $model = PegawaiIkatanKerja::class;
+    protected $model = PegawaiIkatan::class;
 
     public function definition(): array
     {

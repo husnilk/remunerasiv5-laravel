@@ -4,6 +4,7 @@ import { PageProps, Rubrik, RubrikKategori } from '@/types';
 import Heading from '@/components/heading';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { ArrowLeft } from 'lucide-react';
 
 interface RubrikWithKategori extends Rubrik {
     rubrik_kategori: RubrikKategori;
@@ -31,7 +32,7 @@ export default function Show({ auth, rubrik }: ShowPageProps) {
                 >
                     <Button variant='outline' asChild>
                         <Link href={route('admin.rubrik.index')}>
-                            <IconArrowLeft className='mr-2 h-4 w-4' />
+                            <ArrowLeft className='mr-2 h-4 w-4' />
                             Back to List
                         </Link>
                     </Button>

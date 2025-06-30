@@ -1,8 +1,20 @@
 import AppLayout from '@/layouts/app-layout';
 import { Head, useForm } from '@inertiajs/react';
-import { PageProps, Pegawai, PegawaiJenis } from '@/types';
+import { BreadcrumbItem, PageProps, Pegawai, PegawaiJenis } from '@/types';
 import PegawaiForm from './PegawaiForm';
 import Heading from '@/components/heading';
+import { Card, CardContent } from '@/components/ui/card';
+
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Pegawai',
+        href: '/admin/pegawai/',
+    },
+    {
+        title: 'Edit',
+        href: '/admin/pegawai/edit',
+    },
+];
 
 interface EditPageProps extends PageProps {
     pegawai: Pegawai;
@@ -31,21 +43,21 @@ export default function Edit({ auth, pegawai, pegawaiJenis }: EditPageProps) {
     };
 
     return (
-        <AppLayout
-            user={auth.user}
-            header={<Heading>Edit Pegawai</Heading>}
-        >
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title={`Edit Pegawai - ${pegawai.nama}`} />
+            <Heading title="Edit Pegawai" description={`Editing details for ${pegawai.nama}`} />
 
-            <div className='mx-auto max-w-2xl rounded-md border bg-card p-6 shadow'>
-                <PegawaiForm
-                    pegawai={pegawai}
-                    pegawaiJenis={pegawaiJenis}
-                    onSubmit={handleSubmit}
-                    processing={processing}
-                    errors={errors}
-                />
-            </div>
+            <Card>
+                <CardContent>
+                    <PegawaiForm
+                        pegawai={pegawai}
+                        pegawaiJenis={pegawaiJenis}
+                        onSubmit={handleSubmit}
+                        processing={processing}
+                        errors={errors}
+                    />
+                </CardContent>
+            </Card>
         </AppLayout>
     );
 }

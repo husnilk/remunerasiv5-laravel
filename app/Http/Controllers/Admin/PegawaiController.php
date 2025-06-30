@@ -27,7 +27,7 @@ class PegawaiController extends Controller
             });
         }
 
-        $pegawais = $query->latest()->paginate(10)->withQueryString();
+        $pegawais = $query->latest()->paginate(15)->withQueryString();
 
         return Inertia::render('Admin/Pegawai/Index', [
             'pegawais' => $pegawais,

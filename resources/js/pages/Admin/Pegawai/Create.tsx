@@ -1,14 +1,25 @@
 import AppLayout from '@/layouts/app-layout';
 import { Head, useForm } from '@inertiajs/react';
-import { PageProps, Pegawai, PegawaiJenis } from '@/types';
+import { BreadcrumbItem, PageProps, Pegawai, PegawaiJenis } from '@/types';
 import PegawaiForm from './PegawaiForm';
 import Heading from '@/components/heading';
+import { Card, CardContent } from '@/components/ui/card';
 
 interface CreatePageProps extends PageProps {
     pegawaiJenis: PegawaiJenis[];
 }
+const breadcrumbs: BreadcrumbItem[] = [
+    {
+        title: 'Pegawai',
+        href: '/admin/pegawai/',
+    },
+    {
+        title: 'Create',
+        href: '/admin/pegawai/create',
+    },
+];
 
-export default function Create({ auth, pegawaiJenis }: CreatePageProps) {
+export default function Create({ pegawaiJenis }: CreatePageProps) {
     const { data, setData, post, processing, errors } = useForm<Partial<Pegawai>>({
         nama: '',
         nik: '',
@@ -30,20 +41,20 @@ export default function Create({ auth, pegawaiJenis }: CreatePageProps) {
     };
 
     return (
-        <AppLayout
-            user={auth.user}
-            header={<Heading>Add New Pegawai</Heading>}
-        >
+        <AppLayout breadcrumbs={breadcrumbs}>
             <Head title='Add Pegawai' />
+            <Heading title="New Pegawai" description="Create a new pegawai record" />
 
-            <div className='mx-auto max-w-2xl rounded-md border bg-card p-6 shadow'>
-                <PegawaiForm
-                    pegawaiJenis={pegawaiJenis}
-                    onSubmit={handleSubmit}
-                    processing={processing}
-                    errors={errors}
-                />
-            </div>
+            <Card>
+                <CardContent>
+                    <PegawaiForm
+                        pegawaiJenis={pegawaiJenis}
+                        onSubmit={handleSubmit}
+                        processing={processing}
+                        errors={errors}
+                    />
+                </CardContent>
+            </Card>
         </AppLayout>
     );
 }

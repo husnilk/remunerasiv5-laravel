@@ -9,6 +9,7 @@ import { BadgeCheckIcon, Pencil, PlusCircle, ShieldCheck, Trash2 } from 'lucide-
 import { useState } from 'react'; // Added useState
 import CreateRoleModal from './CreateRoleModal'; // Import the create modal
 import EditRoleModal from './EditRoleModal';
+import Heading from '@/components/heading';
 
 interface Permission {
     id: number;
@@ -75,11 +76,7 @@ export default function RolesIndex({ roles, permissions }: Props) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Roles" />
-
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <h2 className="text-2xl font-semibold tracking-tight">Roles</h2>
-                    <p className="text-muted-foreground">Manage user roles and their associated permissions.</p>
+            <Heading title="Roles" description="Manage user roles and their associated permissions" />
                     <div className="mb-4 flex justify-end gap-2">
                         <Button onClick={openCreateModal} variant="outline">
                             <PlusCircle className="mr-2 h-4 w-4" /> Create Role
@@ -131,8 +128,6 @@ export default function RolesIndex({ roles, permissions }: Props) {
                             {roles.length === 0 && <p className="mt-4 text-center">No roles found.</p>}
                         </CardContent>
                     </Card>
-                </div>
-            </div>
 
             {isCreateModalOpen && <CreateRoleModal isOpen={isCreateModalOpen} closeModal={closeCreateModal} allPermissions={permissions} />}
             {isEditModalOpen && editingRole && (

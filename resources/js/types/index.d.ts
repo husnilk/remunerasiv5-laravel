@@ -93,6 +93,70 @@ export interface PegawaiIkatanKerja {
     updated_at: string;
 }
 
+export interface Periode {
+    id: number;
+    nama: string;
+    tahun: number;
+    // Add other relevant Periode fields if needed for display or logic
+    // For example: tgl_mulai, tgl_selesai, aktif
+    aktif?: boolean;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface KontrakKinerja {
+    id: number;
+    pegawai_id: number;
+    pegawai?: Pegawai; // Eager loaded
+    periode_id: number;
+    periode?: Periode; // Eager loaded
+    created_by: number;
+    createdBy?: User; // Eager loaded
+    updated_by: number;
+    updatedBy?: User; // Eager loaded
+    tahun: number;
+    bulan_mulai: number;
+    bulan_selesai: number;
+    tanggal_mulai?: string | null; // ISO date string
+    tanggal_selesai?: string | null; // ISO date string
+    penilai_id: number;
+    penilai?: Pegawai; // Eager loaded
+    atasan_penilai_id: number;
+    atasanPenilai?: Pegawai; // Eager loaded
+    orientasi?: number | null;
+    integritas?: number | null;
+    komitmen?: number | null;
+    disiplin?: number | null;
+    kerjasama?: number | null;
+    kepemimpinan?: number | null;
+    keberatan?: string | null;
+    tanggal_keberatan?: string | null; // ISO date string
+    tanggapan?: string | null;
+    tanggal_tanggapan?: string | null; // ISO date string
+    keputusan?: string | null;
+    tanggal_keputusan?: string | null; // ISO date string
+    rekomendasi?: string | null;
+    tanggal_buat?: string | null; // ISO date string
+    tanggal_terima?: string | null; // ISO date string
+    tanggal_terima_atasan?: string | null; // ISO date string
+    status: number; // 0: draft, 1: submitted, 2: approved, 3: rejected
+    verified_at?: string | null; // ISO datetime string
+    verified_by?: number | null;
+    verifiedBy?: User; // Eager loaded
+    capaian_skp?: number | null;
+    predikat_kinerja?: number | null;
+    rating_perilaku?: number | null;
+    rating_kinerja?: number | null;
+    file_bukti?: number | null; // Or string if it's a path
+    poin: number;
+    poin_verifikasi: number;
+    file_kontrak?: string | null;
+    file_kinerja?: string | null;
+    tingkat_pelanggaran?: number | null;
+    created_at: string; // ISO datetime string
+    updated_at: string; // ISO datetime string
+}
+
 export type RubrikRemun = {
     id: number;
     nama: string;

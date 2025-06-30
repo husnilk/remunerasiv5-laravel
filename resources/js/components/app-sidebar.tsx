@@ -95,6 +95,12 @@ const mainNavGroups: NavGroup[] = [
                 icon: Database, // Using Database icon for now
                 // permission: 'periode.manage' // Optional: Add permission if needed
             },
+            {
+                title: 'Kontrak Kinerja',
+                href: route('admin.kontrak-kinerja.index'),
+                icon: Database, // Choose an appropriate icon, e.g., FileText or similar
+                // permission: 'kontrakkinerja.manage' // Optional: Add permission if needed
+            },
         ],
     },
 ];

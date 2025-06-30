@@ -222,6 +222,60 @@ export interface PegawaiJabatan {
     updated_at?: string;
 }
 
+export interface Periode {
+    id: number;
+    nama: string;
+    tanggal_mulai: string;
+    tanggal_selesai: string;
+    tahun: number;
+    is_active: boolean;
+    created_at: string;
+    updated_at: string;
+    // Add other fields if necessary
+}
+
+export interface Kehadiran {
+    id: number;
+    pegawai_id: number;
+    periode_id: number;
+    created_by: number;
+    status_pegawai: number;
+    tahun: number;
+    bulan: number;
+    hadir: number;
+    dinas_luar: number;
+    cuti_sakit: number;
+    cuti_izin: number;
+    cuti_besar: number;
+    cuti_tahunan: number;
+    cuti_melahirkan: number;
+    cuti_penting: number;
+    cuti_non_taggungan: number;
+    tanpa_keterangan: number;
+    tugas_belajar: number;
+    cuti_bersalin_01: number;
+    cuti_bersalin_02: number;
+    cuti_bersalin_03: number;
+    terlambat_01: number;
+    terlambat_02: number;
+    terlambat_03: number;
+    terlambat_04: number;
+    terlambat_05: number;
+    terlambat_06: number;
+    pulang_cepat_01: number;
+    pulang_cepat_02: number;
+    pulang_cepat_03: number;
+    pulang_cepat_04: number;
+    pulang_cepat_05: number;
+    pulang_cepat_06: number;
+    created_at: string;
+    updated_at: string;
+    pegawai?: Pegawai; // Optional for eager loading
+    periode?: Periode; // Optional for eager loading
+    createdBy?: User; // Optional for eager loading User who created it
+}
+
+
 export type Fungsional = {
     id: number; // Assuming auto-incrementing integer ID
     nama: string;

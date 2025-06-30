@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PeriodeController; // Added for Periode
 use App\Http\Controllers\Admin\PegawaiJabatanController; // Added for PegawaiJabatan
 use App\Http\Controllers\KontrakKinerjaController; // Added for KontrakKinerja
+use App\Http\Controllers\KehadiranController; // Added for Kehadiran
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -69,6 +70,8 @@ Route::middleware(['auth'])->group(function () {
 
         // Kontrak Kinerja Management Routes
         Route::resource('kontrak-kinerja', KontrakKinerjaController::class)->except(['show']);
+        // Kehadiran Management Routes
+        Route::resource('kehadiran', KehadiranController::class)->except(['show']);
     });
 
 });

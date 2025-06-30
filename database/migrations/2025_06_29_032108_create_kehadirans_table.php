@@ -20,7 +20,7 @@ return new class extends Migration
             $table->integer('tahun');
             $table->integer('bulan');
             $table->integer('hadir')->default(0);
-            $table->integer('dinas_luar')->defaul(0);
+            $table->integer('dinas_luar')->default(0);
             $table->integer('cuti_sakit')->default(0);
             $table->integer('cuti_izin')->default(0);
             $table->integer('cuti_besar')->default(0);

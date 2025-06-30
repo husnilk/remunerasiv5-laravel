@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\UnitController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PeriodeController; // Added for Periode
 use App\Http\Controllers\Admin\PegawaiJabatanController; // Added for PegawaiJabatan
+use App\Http\Controllers\KehadiranController; // Added for Kehadiran
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -65,6 +66,9 @@ Route::middleware(['auth'])->group(function () {
         Route::resource('periodes', PeriodeController::class)->except(['show']);
         Route::post('periodes/{periode}/activate', [PeriodeController::class, 'activate'])->name('periodes.activate');
         Route::post('periodes/{periode}/deactivate', [PeriodeController::class, 'deactivate'])->name('periodes.deactivate');
+
+        // Kehadiran Management Routes
+        Route::resource('kehadiran', KehadiranController::class)->except(['show']);
     });
 
 });

@@ -95,6 +95,12 @@ const mainNavGroups: NavGroup[] = [
                 icon: Database, // Using Database icon for now
                 // permission: 'periode.manage' // Optional: Add permission if needed
             },
+            {
+                title: 'Kehadiran',
+                href: route('admin.kehadiran.index'),
+                icon: Database, // Using Database icon for now, consider a more specific one
+                // permission: 'kehadiran.manage' // Optional: Add permission if needed
+            },
         ],
     },
 ];
